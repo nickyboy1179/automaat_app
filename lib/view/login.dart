@@ -1,5 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
+import '../model/api_service.dart';
+import 'navigation.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -84,9 +88,39 @@ class _LoginState extends State<Login> {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
                 child: const Text('Login'),
-                onPressed: () {
+                onPressed: () async {
                   print(emailController.text);
                   print(passwordController.text);
+
+                  String username = emailController.text;
+                  String password = passwordController.text;
+
+                  final dio = Dio();
+                  final apiService = ApiService(dio);
+
+                  try {
+                    final authRequest = AuthRequest(
+                      username: username,
+                      password: password,
+                      rememberMe: true,
+                    );
+
+                    final response = await apiService.authenticate(authRequest);
+                    print(response.id_token);
+                    if (mounted) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Navigation()),
+                      );
+                    }
+                  } catch (e) {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Authentication failed: $e')),
+                      );
+                    }
+                  }
+
                 },
               ),
             ),
