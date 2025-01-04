@@ -6,6 +6,48 @@ part of 'api_service.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+Car _$CarFromJson(Map<String, dynamic> json) => Car(
+      id: (json['id'] as num).toInt(),
+      brand: json['brand'] as String,
+      model: json['model'] as String,
+      picture: json['picture'] as String,
+      pictureContentType: json['pictureContentType'] as String,
+      fuel: json['fuel'] as String,
+      options: json['options'] as String,
+      licencePlate: json['licencePlate'] as String,
+      engineSize: (json['engineSize'] as num).toInt(),
+      since: json['since'] as String,
+      price: (json['price'] as num).toInt(),
+      nrOfSeats: (json['nrOfSeats'] as num).toInt(),
+      body: json['body'] as String,
+      longitude: (json['longitude'] as num).toInt(),
+      latitude: (json['latitude'] as num).toInt(),
+      inspections: (json['inspections'] as num?)?.toInt(),
+      repairs: (json['repairs'] as num?)?.toInt(),
+      rentals: (json['rentals'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$CarToJson(Car instance) => <String, dynamic>{
+      'id': instance.id,
+      'brand': instance.brand,
+      'model': instance.model,
+      'picture': instance.picture,
+      'pictureContentType': instance.pictureContentType,
+      'fuel': instance.fuel,
+      'options': instance.options,
+      'licencePlate': instance.licencePlate,
+      'engineSize': instance.engineSize,
+      'since': instance.since,
+      'price': instance.price,
+      'nrOfSeats': instance.nrOfSeats,
+      'body': instance.body,
+      'longitude': instance.longitude,
+      'latitude': instance.latitude,
+      'inspections': instance.inspections,
+      'repairs': instance.repairs,
+      'rentals': instance.rentals,
+    };
+
 AuthRequest _$AuthRequestFromJson(Map<String, dynamic> json) => AuthRequest(
       username: json['username'] as String,
       password: json['password'] as String,
@@ -67,6 +109,35 @@ class _ApiService implements ApiService {
     late TokenResponse _value;
     try {
       _value = TokenResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<List<Car>> getCars() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<List<Car>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/cars',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<Car> _value;
+    try {
+      _value = _result.data!
+          .map((dynamic i) => Car.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

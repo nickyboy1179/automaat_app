@@ -10,6 +10,56 @@ abstract class ApiService {
 
   @POST("/authenticate")
   Future<TokenResponse> authenticate(@Body() AuthRequest authRequest);
+
+  @GET("/cars")
+  Future<List<Car>> getCars();
+}
+
+@JsonSerializable()
+class Car {
+  final int id;
+  final String brand;
+  final String model;
+  final String picture;
+  final String pictureContentType;
+  final String fuel;
+  final String options;
+  final String licencePlate;
+  final int engineSize;
+  final String since;
+  final int price;
+  final int nrOfSeats;
+  final String body;
+  final int longitude;
+  final int latitude;
+  final int? inspections;
+  final int? repairs;
+  final int? rentals;
+
+  const Car({
+    required this.id,
+    required this.brand,
+    required this.model,
+    required this.picture,
+    required this.pictureContentType,
+    required this.fuel,
+    required this.options,
+    required this.licencePlate,
+    required this.engineSize,
+    required this.since,
+    required this.price,
+    required this.nrOfSeats,
+    required this.body,
+    required this.longitude,
+    required this.latitude,
+    required this.inspections,
+    required this.repairs,
+    required this.rentals,
+  });
+
+  factory Car.fromJson(Map<String, dynamic> json) => _$CarFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CarToJson(this);
 }
 
 @JsonSerializable()

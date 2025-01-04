@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:automaat_app/view/settings.dart';
-import 'package:automaat_app/view/explore.dart';
+import 'package:automaat_app/view/car_list.dart';
 import 'package:automaat_app/view/home.dart';
 
 class Navigation extends StatefulWidget {
@@ -16,11 +16,6 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Navigation'),
-          backgroundColor: Colors.purple,
-          ),
-
         bottomNavigationBar: NavigationBar(
           selectedIndex: currentPageIndex,
           onDestinationSelected: (int index) {
@@ -34,19 +29,29 @@ class _NavigationState extends State<Navigation> {
                 label: 'Home',
             ),
             NavigationDestination(
-              icon: Icon(Icons.explore),
-              label: 'Explore',
+              icon: Icon(Icons.car_crash),
+              label: 'Auto lijst',
             ),
             NavigationDestination(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
+              icon: Icon(Icons.notifications,),
+              label: 'Notifications',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.car_rental),
+              label: 'Reservering',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.account_circle),
+              label: 'Profiel',
             ),
           ],
         ),
         body: [
           Home(),
-          Explore(),
+          CarList(),
           Settings(),
+          Home(),
+          Home(),
         ][currentPageIndex],
       );
   }
