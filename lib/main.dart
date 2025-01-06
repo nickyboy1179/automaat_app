@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:automaat_app/view/login.dart';
-import 'package:automaat_app/view/navigation.dart';
 
 
 void main() {
@@ -12,8 +11,10 @@ class AutomaatApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Login(),
+    return MaterialApp(
+      home: Scaffold(
+        body: Login(),
+      ),
     );
   }
 }
