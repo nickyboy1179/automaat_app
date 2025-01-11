@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/api_service.dart';
 import 'navigation.dart';
@@ -24,8 +24,10 @@ class _LoginState extends State<Login> {
       String username = _emailController.text;
       String password = _passwordController.text;
 
+
       final dio = Dio();
       final apiService = ApiService(dio);
+      final perfs = await SharedPreferences.getInstance();
 
       try {
         final authRequest = AuthRequest(
@@ -36,9 +38,10 @@ class _LoginState extends State<Login> {
 
         final response = await apiService.authenticate(authRequest);
 
+        await perfs.setString('token', response.id_token);
+
         if (mounted) {
-          Navigator.pushReplacement(
-            context,
+          Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => Navigation()),
           );
         }
