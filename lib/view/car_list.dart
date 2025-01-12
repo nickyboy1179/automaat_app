@@ -1,5 +1,4 @@
 import 'package:automaat_app/model/rest_client.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class CarList extends StatelessWidget {
