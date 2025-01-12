@@ -1,8 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../model/api_service.dart';
+import 'package:automaat_app/viewmodel/login_viewmodel.dart';
 import 'navigation.dart';
 
 
@@ -14,6 +11,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final loginViewmodel = LoginViewmodel();
   final _formLoginKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -21,36 +19,18 @@ class _LoginState extends State<Login> {
 
   void authenticate() async {
     if (_formLoginKey.currentState!.validate()) {
-      String username = _emailController.text;
+      String email = _emailController.text;
       String password = _passwordController.text;
 
+      var boolResult = await loginViewmodel.authenticate(email, password);
 
-      final dio = Dio();
-      final apiService = ApiService(dio);
-      final perfs = await SharedPreferences.getInstance();
-
-      try {
-        final authRequest = AuthRequest(
-          username: username,
-          password: password,
-          rememberMe: true,
-        );
-
-        final response = await apiService.authenticate(authRequest);
-
-        await perfs.setString('token', response.id_token);
-
+      if (boolResult) {
         if (mounted) {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => Navigation()),
           );
         }
-      } catch (e) {
-        // if (mounted) {
-        //   ScaffoldMessenger.of(context).showSnackBar(
-        //     SnackBar(content: Text('Authentication failed: $e')),
-        //   );
-        // }
+      } else {
         setState(() {
           _errorMessage = "Email/wachtwoord combinatie ongeldig";
         });
@@ -82,7 +62,8 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: TextFormField(
                         validator: (value) {
-                          final RegExp emailRegex = RegExp(r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*$');
+                          final RegExp emailRegex =
+                          RegExp(r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*$');
 
                           if (value == null || value.isEmpty) {
                             return "Vul een e-mailadres in";

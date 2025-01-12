@@ -2,16 +2,16 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'api_service.g.dart';
+part 'rest_client.g.dart';
 
-@RestApi(baseUrl: "https://talented-loving-llama.ngrok-free.app/api")
-abstract class ApiService {
-  factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
+@RestApi()
+abstract class RestClient {
+  factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
 
   @POST("/authenticate")
   Future<TokenResponse> authenticate(@Body() AuthRequest authRequest);
 
-  @GET("/cars")
+  @GET("/cars/1")
   Future<List<Car>> getCars();
 }
 

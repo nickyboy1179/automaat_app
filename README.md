@@ -24,3 +24,7 @@ ngrok http 8080 --domain talented-loving-llama.ngrok-free.app
 ```
 ./mvnw
 ```
+## Generate Retrofit class
+```
+dart pub run build_runner build
+```

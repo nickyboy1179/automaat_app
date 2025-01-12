@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'api_service.dart';
+part of 'rest_client.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -77,8 +77,8 @@ Map<String, dynamic> _$TokenResponseToJson(TokenResponse instance) =>
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
-class _ApiService implements ApiService {
-  _ApiService(this._dio, {this.baseUrl, this.errorLogger}) {
+class _RestClient implements RestClient {
+  _RestClient(this._dio, {this.baseUrl, this.errorLogger}) {
     baseUrl ??= 'https://talented-loving-llama.ngrok-free.app/api';
   }
 
@@ -126,7 +126,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/cars',
+            '/cars/1',
             queryParameters: queryParameters,
             data: _data,
           )
