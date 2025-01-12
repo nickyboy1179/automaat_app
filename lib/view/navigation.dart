@@ -18,43 +18,44 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: currentPageIndex,
-          onDestinationSelected: (int index) {
-            setState(() {
-              currentPageIndex = index;
-            });
-          },
-          destinations: const <Widget>[
-            NavigationDestination(
-                icon: Icon(Icons.home),
-                label: 'Home',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.car_crash),
-              label: 'Auto lijst',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.notifications,),
-              label: 'Notifications',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.car_rental),
-              label: 'Reservering',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.account_circle),
-              label: 'Profiel',
-            ),
-          ],
-        ),
-        body: [
-          Home(),
-          CarList(),
-          Notifications(),
-          Rental(),
-          Profile(),
-        ][currentPageIndex],
-      );
+      appBar: AppBar(),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: currentPageIndex,
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        destinations: const <Widget>[
+          NavigationDestination(
+              icon: Icon(Icons.home),
+              label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.car_crash),
+            label: 'Auto lijst',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.notifications,),
+            label: 'Meldingen',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.car_rental),
+            label: 'Reservering',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.account_circle),
+            label: 'Profiel',
+          ),
+        ],
+      ),
+      body: [
+        Home(),
+        CarList(),
+        Notifications(),
+        Rental(),
+        Profile(),
+      ][currentPageIndex],
+    );
   }
 }
