@@ -1,3 +1,4 @@
+import 'package:automaat_app/repository/retrofit/token_interceptor.dart';
 import 'package:dio/dio.dart';
 
 
@@ -6,9 +7,7 @@ Dio buildDioClient(String base) {
 
   dio.interceptors.addAll(
       [
-        // TokenInterceptor(),
-        // DioLogInterceptor(logger: logger),
-        // LoggyDioInterceptor(),
+        TokenInterceptor(),
       ]
   );
 

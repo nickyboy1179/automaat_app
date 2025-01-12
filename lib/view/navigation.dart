@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:automaat_app/view/settings.dart';
+import 'package:automaat_app/view/profile.dart';
+import 'package:automaat_app/view/rental.dart';
+import 'package:automaat_app/view/notifications.dart';
 import 'package:automaat_app/view/car_list.dart';
 import 'package:automaat_app/view/home.dart';
 
@@ -49,9 +51,9 @@ class _NavigationState extends State<Navigation> {
         body: [
           Home(),
           CarList(),
-          Settings(),
-          Home(),
-          Home(),
+          Notifications(),
+          Rental(),
+          Profile(),
         ][currentPageIndex],
       );
   }

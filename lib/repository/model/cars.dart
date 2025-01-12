@@ -1,0 +1,94 @@
+import 'dart:convert';
+
+class Cars {
+  int id;
+  String brand;
+  String model;
+  String picture;
+  String pictureContentType;
+  String fuel;
+  String options;
+  String licensePlate;
+  int engineSize;
+  int modelYear;
+  DateTime since;
+  int price;
+  int nrOfSeats;
+  String body;
+  double longitude;
+  double latitude;
+  dynamic inspections;
+  dynamic repairs;
+  dynamic rentals;
+
+  Cars({
+    required this.id,
+    required this.brand,
+    required this.model,
+    required this.picture,
+    required this.pictureContentType,
+    required this.fuel,
+    required this.options,
+    required this.licensePlate,
+    required this.engineSize,
+    required this.modelYear,
+    required this.since,
+    required this.price,
+    required this.nrOfSeats,
+    required this.body,
+    required this.longitude,
+    required this.latitude,
+    this.inspections,
+    this.repairs,
+    this.rentals,
+  });
+
+  factory Cars.fromRawJson(String str) => Cars.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Cars.fromJson(Map<String, dynamic> json) => Cars(
+    id: (json["id"] is int ? json["id"] : (json["id"] as num).toInt()),
+    brand: json["brand"],
+    model: json["model"],
+    picture: json["picture"],
+    pictureContentType: json["pictureContentType"],
+    fuel: json["fuel"],
+    options: json["options"],
+    licensePlate: json["licensePlate"],
+    engineSize: (json["engineSize"] is int ? json["engineSize"] : (json["engineSize"] as num).toInt()),
+    modelYear: (json["modelYear"] is int ? json["modelYear"] : (json["modelYear"] as num).toInt()),
+    since: DateTime.parse(json["since"]),
+    price: (json["price"] is int ? json["price"] : (json["price"] as num).toInt()),
+    nrOfSeats: (json["nrOfSeats"] is int ? json["nrOfSeats"] : (json["nrOfSeats"] as num).toInt()),
+    body: json["body"],
+    longitude: json["longitude"]?.toDouble(),
+    latitude: json["latitude"]?.toDouble(),
+    inspections: json["inspections"],
+    repairs: json["repairs"],
+    rentals: json["rentals"],
+  );
+
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "brand": brand,
+    "model": model,
+    "picture": picture,
+    "pictureContentType": pictureContentType,
+    "fuel": fuel,
+    "options": options,
+    "licensePlate": licensePlate,
+    "engineSize": engineSize,
+    "modelYear": modelYear,
+    "since": "${since.year.toString().padLeft(4, '0')}-${since.month.toString().padLeft(2, '0')}-${since.day.toString().padLeft(2, '0')}",
+    "price": price,
+    "nrOfSeats": nrOfSeats,
+    "body": body,
+    "longitude": longitude,
+    "latitude": latitude,
+    "inspections": inspections,
+    "repairs": repairs,
+    "rentals": rentals,
+  };
+}

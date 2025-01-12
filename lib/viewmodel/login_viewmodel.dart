@@ -1,7 +1,6 @@
 import 'package:automaat_app/locator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../model/rest_client.dart';
+import '../repository/retrofit/rest_client.dart';
 
 class LoginViewmodel {
   final restClient = locator<RestClient>();
@@ -14,15 +13,11 @@ class LoginViewmodel {
         password: password,
         rememberMe: true,
       );
-
       final response = await restClient.authenticate(authRequest);
-
       await secureStorage.write(key: "token", value: response.id_token);
-
       return true;
 
     } catch (e) {
-
       return false;
     }
   }
