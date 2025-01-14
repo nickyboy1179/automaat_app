@@ -73,26 +73,26 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<List<Cars>> getCars() async {
+  Future<List<Car>> getCars() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<Cars>>(
+    final _options = _setStreamType<List<Car>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/cars',
+            '/cars?size=30',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<Cars> _value;
+    late List<Car> _value;
     try {
       _value = _result.data!
-          .map((dynamic i) => Cars.fromJson(i as Map<String, dynamic>))
+          .map((dynamic i) => Car.fromJson(i as Map<String, dynamic>))
           .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

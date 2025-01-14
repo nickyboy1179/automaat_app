@@ -1,7 +1,7 @@
-import 'package:automaat_app/locator.dart';
 import 'package:flutter/material.dart';
-import 'package:automaat_app/view/login.dart';
-import 'package:automaat_app/view/navigation.dart';
+import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/view/navigation_view.dart';
+import 'package:automaat_app/view/login_view.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:automaat_app/viewmodel/login_viewmodel.dart';
-import 'navigation.dart';
+import 'navigation_view.dart';
 
 
 class Login extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:automaat_app/repository/retrofit/token_interceptor.dart';
+import 'package:automaat_app/model/retrofit/token_interceptor.dart';
 import 'package:dio/dio.dart';
 
 

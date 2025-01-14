@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class Cars {
+class Car {
   int id;
   String brand;
   String model;
@@ -21,7 +21,7 @@ class Cars {
   dynamic repairs;
   dynamic rentals;
 
-  Cars({
+  Car({
     required this.id,
     required this.brand,
     required this.model,
@@ -43,11 +43,11 @@ class Cars {
     this.rentals,
   });
 
-  factory Cars.fromRawJson(String str) => Cars.fromJson(json.decode(str));
+  factory Car.fromRawJson(String str) => Car.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Cars.fromJson(Map<String, dynamic> json) => Cars(
+  factory Car.fromJson(Map<String, dynamic> json) => Car(
     id: (json["id"] is int ? json["id"] : (json["id"] as num).toInt()),
     brand: json["brand"],
     model: json["model"],

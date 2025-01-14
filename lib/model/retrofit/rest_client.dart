@@ -1,9 +1,9 @@
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:automaat_app/repository/retrofit/api_routes.dart';
+import 'package:automaat_app/model/retrofit/api_routes.dart';
 
-import '../model/cars.dart';
+import '../rest_model/car_model.dart';
 
 part 'rest_client.g.dart';
 
@@ -14,8 +14,8 @@ abstract class RestClient {
   @POST(ApiRoutes.authenticate)
   Future<TokenResponse> authenticate(@Body() AuthRequest authRequest);
 
-  @GET(ApiRoutes.cars)
-  Future<List<Cars>> getCars();
+  @GET("${ApiRoutes.cars}?size=30")
+  Future<List<Car>> getCars();
 }
 
 @JsonSerializable()

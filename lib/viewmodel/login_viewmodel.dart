@@ -1,6 +1,6 @@
 import 'package:automaat_app/locator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../repository/retrofit/rest_client.dart';
+import '../model/retrofit/rest_client.dart';
 
 class LoginViewmodel {
   final restClient = locator<RestClient>();
