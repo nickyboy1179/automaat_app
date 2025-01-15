@@ -47,6 +47,7 @@ dependencies:
   flutter_cache_manager: ^3.4.1
   floor: ^1.4.2
   sqflite: ^2.4.1
+  vector_graphics_compiler: ^1.1.16
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +77,9 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/logo.png
+    - assets/automaat_logo_purple.svg
+    - assets/automaat_logo_purple.svg.vec
+    - assets/automaat_logo_white.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

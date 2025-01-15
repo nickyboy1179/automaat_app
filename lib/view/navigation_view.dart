@@ -3,7 +3,6 @@ import 'package:automaat_app/view/profile_view.dart';
 import 'package:automaat_app/view/rental_view.dart';
 import 'package:automaat_app/view/notifications_view.dart';
 import 'package:automaat_app/view/car_list_view.dart';
-import 'package:automaat_app/view/home_view.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation ({super.key});
@@ -28,12 +27,8 @@ class _NavigationState extends State<Navigation> {
         },
         destinations: const <Widget>[
           NavigationDestination(
-              icon: Icon(Icons.home),
-              label: 'Home',
-          ),
-          NavigationDestination(
             icon: Icon(Icons.car_crash),
-            label: 'Auto lijst',
+            label: 'Auto huren',
           ),
           NavigationDestination(
             icon: Icon(Icons.notifications,),
@@ -50,7 +45,6 @@ class _NavigationState extends State<Navigation> {
         ],
       ),
       body: [
-        Home(),
         CarList(),
         Notifications(),
         Rental(),

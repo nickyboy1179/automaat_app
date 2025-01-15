@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:automaat_app/viewmodel/login_viewmodel.dart';
+import 'package:flutter_svg/svg.dart';
 import 'navigation_view.dart';
+import 'package:vector_graphics/vector_graphics.dart';
 
 
 class Login extends StatefulWidget {
@@ -15,6 +17,7 @@ class _LoginState extends State<Login> {
   final _formLoginKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final Widget automaatLogoSvg = SvgPicture(AssetBytesLoader('assets/automaat_logo_purple.svg.vec'));
   String? _errorMessage;
 
   void authenticate() async {
@@ -49,9 +52,9 @@ class _LoginState extends State<Login> {
             Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(10),
-              child: const Image(
-                  image: AssetImage('assets/logo.png',)
-              ),
+              width: 250,
+              height: 250,
+              child: automaatLogoSvg,
             ),
             Form(
               key: _formLoginKey,
@@ -73,32 +76,46 @@ class _LoginState extends State<Login> {
                           return null;
                         },
                       controller: _emailController,
-                      decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'e-mailadres',
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        labelText: 'E-mailadres',
                       ),
                     ),
                   ),
                   Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      child: TextFormField(
-                        obscureText: true,
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: 'wachtwoord',
-                          errorText: _errorMessage,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    child: TextFormField(
+                      obscureText: true,
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
+                        labelText: 'Wachtwoord',
+                        errorText: _errorMessage,
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 200),
                   Container(
-                    height: 50,
+                    height: 70,
                     width: 400,
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: ElevatedButton(
                       onPressed: authenticate,
-                      child: const Text('Inloggen'),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Color(0xFF8E48C1),
+                      ),
+                      child: const Text(
+                        'Inloggen',
+                        style: TextStyle(
+                          fontSize: 22,
+                        ),
+                      ),
                     ),
                   ),
                 ],
