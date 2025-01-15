@@ -18,6 +18,7 @@ class LoginViewmodel {
       return true;
 
     } catch (e) {
+      print(e);
       return false;
     }
   }

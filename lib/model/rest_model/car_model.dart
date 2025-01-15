@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:floor/floor.dart';
 
+@entity
 class Car {
+  @primaryKey
   int id;
   String brand;
   String model;
@@ -11,15 +14,15 @@ class Car {
   String licensePlate;
   int engineSize;
   int modelYear;
-  DateTime since;
+  String since;
   int price;
   int nrOfSeats;
   String body;
   double longitude;
   double latitude;
-  dynamic inspections;
-  dynamic repairs;
-  dynamic rentals;
+  int? inspections;
+  int? repairs;
+  int? rentals;
 
   Car({
     required this.id,
@@ -58,7 +61,7 @@ class Car {
     licensePlate: json["licensePlate"],
     engineSize: (json["engineSize"] is int ? json["engineSize"] : (json["engineSize"] as num).toInt()),
     modelYear: (json["modelYear"] is int ? json["modelYear"] : (json["modelYear"] as num).toInt()),
-    since: DateTime.parse(json["since"]),
+    since: (json["since"]),
     price: (json["price"] is int ? json["price"] : (json["price"] as num).toInt()),
     nrOfSeats: (json["nrOfSeats"] is int ? json["nrOfSeats"] : (json["nrOfSeats"] as num).toInt()),
     body: json["body"],
@@ -81,7 +84,7 @@ class Car {
     "licensePlate": licensePlate,
     "engineSize": engineSize,
     "modelYear": modelYear,
-    "since": "${since.year.toString().padLeft(4, '0')}-${since.month.toString().padLeft(2, '0')}-${since.day.toString().padLeft(2, '0')}",
+    "since": since,
     "price": price,
     "nrOfSeats": nrOfSeats,
     "body": body,
