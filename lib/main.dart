@@ -16,6 +16,7 @@ class AutomaatApp extends StatelessWidget {
   Future<bool> isLoggedIn() async {
     final secureStorage = locator<FlutterSecureStorage>();
     final String? token = await secureStorage.read(key: 'token');
+    await locator.allReady();
     return token != null && token.isNotEmpty;
   }
 
@@ -29,7 +30,7 @@ class AutomaatApp extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData && snapshot.data == true) {
-            return const Navigation();
+            return Navigation();
           } else {
             return const Login();
           }

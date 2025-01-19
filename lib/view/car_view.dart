@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'car_list_view.dart';
+import 'package:automaat_app/model/rest_model/car_model.dart';
 
-class CarView extends StatefulWidget {
-  const CarView({super.key});
+class CarView extends StatelessWidget {
+  final Car car;
+  const CarView({super.key, required this.car});
 
-  @override
-  State<CarView> createState() => _CarViewState();
-}
-
-class _CarViewState extends State<CarView> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Center(
+      child: Text("Car view ${car.fuel}"),
+    );
   }
 }

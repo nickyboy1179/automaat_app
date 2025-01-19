@@ -14,17 +14,29 @@ class Navigation extends StatefulWidget {
 class _NavigationState extends State<Navigation> {
   int currentPageIndex = 0;
 
+  final GlobalKey<NavigatorState> carListNavigatorKey = GlobalKey<NavigatorState>();
+
+  void _onNavigationTap(int index) {
+    if (index == currentPageIndex) return;
+
+    switch (index) {
+      case 0:
+      // Reset stack for CarList
+        carListNavigatorKey.currentState?.popUntil((route) => route.isFirst);
+    }
+
+    setState(() {
+      currentPageIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentPageIndex,
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
+        onDestinationSelected: _onNavigationTap,
         destinations: const <Widget>[
           NavigationDestination(
             icon: Icon(Icons.car_crash),
@@ -44,12 +56,34 @@ class _NavigationState extends State<Navigation> {
           ),
         ],
       ),
-      body: [
-        CarList(),
-        Notifications(),
-        Rental(),
-        Profile(),
-      ][currentPageIndex],
+      body: Stack(
+        children: [
+          Offstage(
+            offstage: currentPageIndex != 0,
+            child: PopScope(
+              canPop: false,
+              child: Navigator(
+                key: carListNavigatorKey,
+                onGenerateRoute: (settings) => MaterialPageRoute(
+                  builder: (context) => CarList(),
+                ),
+              ),
+            ),
+          ),
+          Offstage(
+            offstage: currentPageIndex != 1,
+            child: Notifications(),
+          ),
+          Offstage(
+            offstage: currentPageIndex != 2,
+            child: Rental(),
+          ),
+          Offstage(
+            offstage: currentPageIndex != 3,
+            child: Profile(),
+          ),
+        ],
+      ),
     );
   }
 }
