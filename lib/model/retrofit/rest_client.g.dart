@@ -118,12 +118,13 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<Rental> postRental(Rental rental) async {
+  Future<void> postRental(Rental rental) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<Rental>(Options(
+    final _data = <String, dynamic>{};
+    _data.addAll(rental.toJson());
+    final _options = _setStreamType<void>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -139,10 +140,35 @@ class _RestClient implements RestClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<AboutMe> getUserInfo() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<AboutMe>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/AM/me',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Rental _value;
+    late AboutMe _value;
     try {
-      _value = Rental.fromJson(_result.data!);
+      _value = AboutMe.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

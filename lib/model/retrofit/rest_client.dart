@@ -2,9 +2,9 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:automaat_app/model/retrofit/api_routes.dart';
-
-import '../rest_model/car_model.dart';
-import '../rest_model/rental_model.dart';
+import 'package:automaat_app/model/rest_model/about_me_model.dart';
+import 'package:automaat_app/model/rest_model/car_model.dart';
+import 'package:automaat_app/model/rest_model/rental_model.dart';
 
 part 'rest_client.g.dart';
 
@@ -19,7 +19,10 @@ abstract class RestClient {
   Future<List<Car>> getCars();
 
   @POST(ApiRoutes.rentals)
-  Future<Rental> postRental(Rental rental);
+  Future<void> postRental(@Body() Rental rental);
+
+  @GET(ApiRoutes.aboutMe)
+  Future<AboutMe> getUserInfo();
 }
 
 @JsonSerializable()

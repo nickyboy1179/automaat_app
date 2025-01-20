@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 class Customer {
-  int? id;
-  int? nr;
+  int id;
+  int nr;
   String lastName;
   String firstName;
   String from;
