@@ -96,7 +96,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Car` (`id` INTEGER NOT NULL, `brand` TEXT NOT NULL, `model` TEXT NOT NULL, `picture` TEXT NOT NULL, `pictureContentType` TEXT NOT NULL, `fuel` TEXT NOT NULL, `options` TEXT NOT NULL, `licensePlate` TEXT NOT NULL, `engineSize` INTEGER NOT NULL, `modelYear` INTEGER NOT NULL, `since` TEXT NOT NULL, `price` INTEGER NOT NULL, `nrOfSeats` INTEGER NOT NULL, `body` TEXT NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `inspections` INTEGER, `repairs` INTEGER, `rentals` INTEGER, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Car` (`id` INTEGER NOT NULL, `brand` TEXT NOT NULL, `model` TEXT NOT NULL, `picture` TEXT NOT NULL, `pictureContentType` TEXT NOT NULL, `fuel` TEXT NOT NULL, `options` TEXT NOT NULL, `licensePlate` TEXT NOT NULL, `engineSize` INTEGER NOT NULL, `modelYear` INTEGER NOT NULL, `since` TEXT NOT NULL, `price` INTEGER NOT NULL, `nrOfSeats` INTEGER NOT NULL, `body` TEXT NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -134,10 +134,7 @@ class _$CarDao extends CarDao {
                   'nrOfSeats': item.nrOfSeats,
                   'body': item.body,
                   'longitude': item.longitude,
-                  'latitude': item.latitude,
-                  'inspections': item.inspections,
-                  'repairs': item.repairs,
-                  'rentals': item.rentals
+                  'latitude': item.latitude
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -167,10 +164,7 @@ class _$CarDao extends CarDao {
             nrOfSeats: row['nrOfSeats'] as int,
             body: row['body'] as String,
             longitude: row['longitude'] as double,
-            latitude: row['latitude'] as double,
-            inspections: row['inspections'] as int?,
-            repairs: row['repairs'] as int?,
-            rentals: row['rentals'] as int?));
+            latitude: row['latitude'] as double));
   }
 
   @override

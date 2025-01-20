@@ -20,9 +20,6 @@ class Car {
   String body;
   double longitude;
   double latitude;
-  int? inspections;
-  int? repairs;
-  int? rentals;
 
   Car({
     required this.id,
@@ -41,9 +38,6 @@ class Car {
     required this.body,
     required this.longitude,
     required this.latitude,
-    this.inspections,
-    this.repairs,
-    this.rentals,
   });
 
   factory Car.fromRawJson(String str) => Car.fromJson(json.decode(str));
@@ -67,9 +61,6 @@ class Car {
     body: json["body"],
     longitude: json["longitude"]?.toDouble(),
     latitude: json["latitude"]?.toDouble(),
-    inspections: json["inspections"],
-    repairs: json["repairs"],
-    rentals: json["rentals"],
   );
 
 
@@ -90,9 +81,6 @@ class Car {
     "body": body,
     "longitude": longitude,
     "latitude": latitude,
-    "inspections": inspections,
-    "repairs": repairs,
-    "rentals": rentals,
   };
 
 

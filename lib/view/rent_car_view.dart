@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:automaat_app/common/shared_widgets.dart';
 import '../model/rest_model/car_model.dart';
+// import '../model/rest_model/rental_model.dart';
+import '../viewmodel/rent_car_viewmodel.dart';
 
 class RentCarView extends StatefulWidget {
   final Car car;
@@ -12,66 +14,40 @@ class RentCarView extends StatefulWidget {
 }
 
 class RentCarViewSate extends State<RentCarView> {
-  DateTime? _startDateTime;
-  DateTime? _endDateTime;
+  DateTime? _startDate;
+  DateTime? _endDate;
   late Car car;
+  final RentCarViewmodel rentCarViewmodel = RentCarViewmodel();
 
-  Future<void> _pickDateTime(BuildContext context, DateTime? selectedDate) async {
+  Future<void> _pickDateRange(BuildContext context) async {
     final now = DateTime.now();
 
-    final DateTime? pickedDate = await showDatePicker(
+    final DateTime? pickedStartDate = await showDatePicker(
       context: context,
       initialDate: now,
       firstDate: now,
       lastDate: DateTime(2100),
     );
 
-    if (pickedDate != null) {
-      final bool isToday = pickedDate.isAtSameMomentAs(DateTime(now.year, now.month, now.day));
-      final TimeOfDay initialTime = isToday
-          ? TimeOfDay(hour: now.hour, minute: 0)
-          : const TimeOfDay(hour: 8, minute: 0);
-
-      final TimeOfDay? pickedTime = await showTimePicker(
+    if (pickedStartDate != null) {
+      final DateTime? pickedEndDate = await showDatePicker(
         context: context,
-        initialTime: initialTime,
-        builder: (BuildContext context, Widget? child) {
-          return MediaQuery(
-            data: MediaQuery.of(context),
-            child: child!,
-          );
-        },
+        initialDate: pickedStartDate.add(const Duration(days: 1)),
+        firstDate: pickedStartDate,
+        lastDate: DateTime(2100),
       );
 
-      if (pickedTime != null) {
-        final DateTime selectedDateTime = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          0,
-        );
-
-        if (selectedDateTime.isBefore(now)) {
+      if (pickedEndDate != null) {
+        if (pickedEndDate.isBefore(pickedStartDate)) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Please select a date and time in the future.')),
-          );
-          return;
-        }
-
-        if (_endDateTime != null && selectedDateTime.isAfter(_endDateTime!)) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('End time cannot be earlier than start time.')),
+            const SnackBar(content: Text('End date cannot be before start date.')),
           );
           return;
         }
 
         setState(() {
-          if (selectedDate == _startDateTime) {
-            _startDateTime = selectedDateTime;
-          } else {
-            _endDateTime = selectedDateTime;
-          }
+          _startDate = pickedStartDate;
+          _endDate = pickedEndDate;
         });
       }
     }
@@ -101,9 +77,9 @@ class RentCarViewSate extends State<RentCarView> {
           SharedWidgets.carCard(car, context),
           const SizedBox(height: 20),
           Text(
-            _startDateTime == null
-                ? 'Selecteer het ophaalmoment'
-                : 'Start: $_startDateTime',
+            _startDate == null
+                ? 'Selecteer het ophaal- en inlevermoment'
+                : 'Start: $_startDate \ninlever: $_endDate',
             style: TextStyle(
               fontSize: 22,
               color: SharedWidgets.accentColor,
@@ -111,30 +87,16 @@ class RentCarViewSate extends State<RentCarView> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () async => await _pickDateTime(context, _startDateTime),
+            onPressed: () async => await _pickDateRange(context),
             style: SharedWidgets.automaatButtonStyle,
-            child: const Text('Selecteer ophaalmoment'),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            _endDateTime == null
-                ? 'Selecteer het inlevermoment'
-                : 'Eind: $_endDateTime',
-            style: TextStyle(
-              fontSize: 22,
-              color: SharedWidgets.accentColor,
-            ),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () async => await _pickDateTime(context, _endDateTime),
-            style: SharedWidgets.automaatButtonStyle,
-            child: const Text('Selecteer inlevermoment'),
+            child: const Text('Selecteer datum'),
           ),
           const SizedBox(height: 40),
           ElevatedButton(
             style: SharedWidgets.automaatConfirmButtonStyle,
-            onPressed: () => submitRental,
+            onPressed: () => {
+              rentCarViewmodel.postRental(car, _startDate!, _endDate!)
+            },
             child: Text(
               "Bevestigen",
               style: TextStyle(
@@ -146,10 +108,6 @@ class RentCarViewSate extends State<RentCarView> {
         ],
       )
     );
-  }
-
-  void submitRental() {
-
   }
 }
 

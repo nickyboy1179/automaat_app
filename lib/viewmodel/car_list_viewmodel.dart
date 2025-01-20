@@ -1,4 +1,3 @@
-import 'package:automaat_app/model/database/dao/car_dao.dart';
 import '../locator.dart';
 import '../model/database/database.dart';
 import '../model/rest_model/car_model.dart';
