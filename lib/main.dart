@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:automaat_app/locator.dart';
 import 'package:automaat_app/view/navigation_view.dart';
 import 'package:automaat_app/view/login_view.dart';
+import 'package:automaat_app/common/shared_widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 
 void main() {
   setupLocator();
-  runApp ( AutomaatApp() );
+  runApp(AutomaatApp());
 }
 
 class AutomaatApp extends StatelessWidget {
@@ -16,6 +16,7 @@ class AutomaatApp extends StatelessWidget {
   Future<bool> isLoggedIn() async {
     final secureStorage = locator<FlutterSecureStorage>();
     final String? token = await secureStorage.read(key: 'token');
+    // Wait until DI container has finished initializing.
     await locator.allReady();
     return token != null && token.isNotEmpty;
   }

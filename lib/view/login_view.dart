@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:automaat_app/viewmodel/login_viewmodel.dart';
 import 'package:flutter_svg/svg.dart';
+import '../common/shared_widgets.dart';
 import 'navigation_view.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
@@ -44,7 +45,12 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+   return Container(
+       color: SharedWidgets.backgroundColor,
+       child: SafeArea(
+       child: Padding(
+       padding: EdgeInsets.only(top: 10.0),
+    child: Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
@@ -99,7 +105,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 200),
+                  const SizedBox(height: 30),
                   Container(
                     height: 70,
                     width: 400,
@@ -124,6 +130,9 @@ class _LoginState extends State<Login> {
           ]
         ),
       )
+    )
+    )
+       )
    );
   }
 }

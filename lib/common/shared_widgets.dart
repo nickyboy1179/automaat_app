@@ -10,6 +10,29 @@ class SharedWidgets {
   static final double outerCardPadding = 4.0;
   static final double fontSizeTitle = 18;
   static final double fontSizeAttr = 12;
+  static final double elevation = 4;
+
+  //Colors
+  static final Color accentColor = const Color(0xFF8E48C1);
+  static final Color backgroundColor = const Color(0xFFf3edf7);
+
+  static ButtonStyle automaatButtonStyle = ButtonStyle(
+    backgroundColor: const WidgetStatePropertyAll<Color>(Color(0xFFf3edf7)),
+    fixedSize: const WidgetStatePropertyAll<Size>(Size(400,50)),
+    shape: WidgetStatePropertyAll<OutlinedBorder>(RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16))
+    ),
+    elevation: const WidgetStatePropertyAll<double>(4.0),
+  );
+
+  static ButtonStyle automaatConfirmButtonStyle = ButtonStyle(
+    backgroundColor: const WidgetStatePropertyAll<Color>(Color(0xFF8E48C1)),
+    fixedSize: const WidgetStatePropertyAll<Size>(Size(400,50)),
+    shape: WidgetStatePropertyAll<OutlinedBorder>(RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16))
+    ),
+    elevation: const WidgetStatePropertyAll<double>(4.0),
+  );
 
   static final Map<String, String> fuelTypes = {
     "GASOLINE": "Benzine",
@@ -41,7 +64,7 @@ class SharedWidgets {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
-          elevation: 4,
+          elevation: elevation,
           child: Row(
             children: [
               Padding(
@@ -66,23 +89,23 @@ class SharedWidgets {
                       style: TextStyle(
                         fontSize: fontSizeTitle,
                         fontWeight: FontWeight.bold,
-                        color: const Color(0xFF8E48C1),
+                        color: accentColor,
                       ),
                     ),
                     SizedBox(height: columnItemPadding),
                     Text(
                       fuelTypes[car.fuel]!,
-                      style: TextStyle(fontSize: fontSizeAttr, color: const Color(0xFF8E48C1)),
+                      style: TextStyle(fontSize: fontSizeAttr, color: accentColor),
                     ),
                     SizedBox(height: columnItemPadding),
                     Text(
                       bodyTypes[car.body]!,
-                      style: TextStyle(fontSize: fontSizeAttr, color: const Color(0xFF8E48C1)),
+                      style: TextStyle(fontSize: fontSizeAttr, color: accentColor),
                     ),
                     SizedBox(height: columnItemPadding),
                     Text(
                       "${car.nrOfSeats} stoelen",
-                      style: TextStyle(fontSize: fontSizeAttr, color: const Color(0xFF8E48C1)),
+                      style: TextStyle(fontSize: fontSizeAttr, color: accentColor),
                     ),
                   ],
                 ),

@@ -49,6 +49,7 @@ dependencies:
   sqflite: ^2.4.1
   vector_graphics_compiler: ^1.1.16
   vector_graphics: ^1.1.15
+  intl: ^0.20.1
 
 dev_dependencies:
   flutter_test:

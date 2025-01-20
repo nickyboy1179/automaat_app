@@ -1,7 +1,8 @@
-import 'package:automaat_app/view/login_view.dart';
+import 'package:automaat_app/common/shared_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../locator.dart';
+import '../main.dart';
 
 class Profile extends StatelessWidget {
   Profile({super.key});
@@ -15,7 +16,7 @@ class Profile extends StatelessWidget {
     if (context.mounted) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Login()),
+        MaterialPageRoute(builder: (context) => AutomaatApp()),
       );
     }
   }
@@ -25,11 +26,15 @@ class Profile extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(16.0),
+          style: SharedWidgets.automaatConfirmButtonStyle,
+          onPressed: () => logOut(context),
+          child: Text(
+            "Uitloggen",
+            style: TextStyle(
+              fontSize: 22,
+              color: Colors.white,
+            ),
           ),
-            onPressed: () => logOut(context),
-            child: Text("Uitloggen"),
         ),
       ),
     );
