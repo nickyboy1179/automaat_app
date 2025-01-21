@@ -1,17 +1,17 @@
 import 'package:automaat_app/locator.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:automaat_app/model/rest_model/customer_model.dart';
 import 'package:automaat_app/model/rest_model/about_me_model.dart';
 import 'package:automaat_app/model/retrofit/rest_client.dart';
 import 'package:automaat_app/model/rest_model/rental_model.dart';
 import 'package:intl/intl.dart';
+import 'package:automaat_app/view/rental_view.dart';
 
 class RentCarViewmodel {
   final restClient = locator<RestClient>();
-  final secureStorage = locator<FlutterSecureStorage>();
 
-  Future<void> postRental(Car car, DateTime startDate, DateTime endDate) async {
+  Future<void> postRental(Car car, DateTime startDate, DateTime endDate, BuildContext context) async {
     AboutMe user = await restClient.getUserInfo();
 
     Customer customer = Customer(
@@ -36,5 +36,11 @@ class RentCarViewmodel {
     );
 
     await restClient.postRental(rental);
+    if (context.mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RentalView())
+      );
+    }
   }
 }

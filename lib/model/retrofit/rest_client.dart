@@ -23,6 +23,22 @@ abstract class RestClient {
 
   @GET(ApiRoutes.aboutMe)
   Future<AboutMe> getUserInfo();
+
+  @GET("${ApiRoutes.rentals}/{id}")
+  Future<Rental> getRentalById(@Path('id') String id);
+
+  @GET(ApiRoutes.rentals)
+  Future<List<Rental>> getRentalsByCustomerId(@Query("customerId.equals") String id,
+      @Query("page") String page,
+      @Query("size") String size,
+      );
+
+  @GET(ApiRoutes.rentals)
+  Future<List<Rental>> getRentalsByCarIdAndState(@Query("state.notIn") String stateNotIn,
+      @Query("carId.equals") String carId,
+      @Query("page") String page,
+      @Query("size") String size,
+      );
 }
 
 @JsonSerializable()

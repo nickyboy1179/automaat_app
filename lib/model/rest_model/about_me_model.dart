@@ -1,3 +1,4 @@
+import 'package:automaat_app/model/rest_model/rental_model.dart';
 import 'package:automaat_app/model/rest_model/system_user_model.dart';
 import 'dart:convert';
 
@@ -36,6 +37,8 @@ class AboutMe {
     rentals: List<dynamic>.from(json["rentals"].map((x) => x)),
     location: json["location"],
   );
+
+  bool get isEmpty => false;
 
   Map<String, dynamic> toJson() => {
     "id": id,

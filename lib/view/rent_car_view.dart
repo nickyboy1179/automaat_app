@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:automaat_app/common/shared_widgets.dart';
 import '../model/rest_model/car_model.dart';
-// import '../model/rest_model/rental_model.dart';
 import '../viewmodel/rent_car_viewmodel.dart';
 
 class RentCarView extends StatefulWidget {
@@ -95,7 +94,7 @@ class RentCarViewSate extends State<RentCarView> {
           ElevatedButton(
             style: SharedWidgets.automaatConfirmButtonStyle,
             onPressed: () => {
-              rentCarViewmodel.postRental(car, _startDate!, _endDate!)
+              rentCarViewmodel.postRental(car, _startDate!, _endDate!, context)
             },
             child: Text(
               "Bevestigen",

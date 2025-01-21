@@ -79,7 +79,7 @@ class _NavigationState extends State<Navigation> {
                 ),
                 Offstage(
                   offstage: currentPageIndex != 2,
-                  child: Rental(),
+                  child: RentalView(),
                 ),
                 Offstage(
                   offstage: currentPageIndex != 3,
