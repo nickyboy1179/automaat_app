@@ -2,9 +2,9 @@
     <!-- Required to fetch data from the internet. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="automaat_app"
+        android:label="Automaat"
         android:name="${applicationName}"
-        android:icon="@mipmap/automaat_app_logo">
+        android:icon="@mipmap/ic_launcher">
 
         <activity
             android:name=".MainActivity"

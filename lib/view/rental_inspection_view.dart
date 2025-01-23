@@ -2,7 +2,7 @@ import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/viewmodel/car_list_viewmodel.dart';
 import 'package:automaat_app/common/shared_widgets.dart';
-import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+// import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 
 import '../model/rest_model/rental_model.dart';
 
@@ -127,23 +127,23 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
     );
   }
 
-  Widget _OSMmap() {
-    return OSMViewer(
-      controller: SimpleMapController(
-        initPosition: GeoPoint(
-          latitude: rental.latitude,
-          longitude: rental.longitude,
-        ),
-        markerHome: const MarkerIcon(
-          icon: Icon(Icons.home),
-        ),
-      ),
-      zoomOption: const ZoomOption(
-        initZoom: 16,
-        minZoomLevel: 11,
-      ),
-    );
-  }
+  // Widget _OSMmap() {
+  //   return OSMViewer(
+  //     controller: SimpleMapController(
+  //       initPosition: GeoPoint(
+  //         latitude: rental.latitude,
+  //         longitude: rental.longitude,
+  //       ),
+  //       markerHome: const MarkerIcon(
+  //         icon: Icon(Icons.home),
+  //       ),
+  //     ),
+  //     zoomOption: const ZoomOption(
+  //       initZoom: 16,
+  //       minZoomLevel: 11,
+  //     ),
+  //   );
+  // }
 
   BoxDecoration _cardDecoration() {
     return BoxDecoration(
