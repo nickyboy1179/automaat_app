@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:automaat_app/viewmodel/login_viewmodel.dart';
+import 'package:automaat_app/controller/login_viewmodel.dart';
 import 'package:flutter_svg/svg.dart';
 import '../common/shared_widgets.dart';
 import 'navigation_view.dart';

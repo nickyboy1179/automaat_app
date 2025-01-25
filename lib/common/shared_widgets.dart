@@ -65,17 +65,18 @@ class SharedWidgets {
     padding: EdgeInsets.all(outerCardPadding),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => CarView(car: car,),
-            ),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       builder: (context) => CarView(car: car,),
+          //   ),
+          // );
         },
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
+          color: Theme.of(context).colorScheme.surface,
           elevation: elevation,
           child: Row(
             children: [
@@ -101,23 +102,23 @@ class SharedWidgets {
                       style: TextStyle(
                         fontSize: fontSizeTitle,
                         fontWeight: FontWeight.bold,
-                        color: accentColor,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     SizedBox(height: columnItemPadding),
                     Text(
                       fuelTypes[car.fuel]!,
-                      style: TextStyle(fontSize: fontSizeAttr, color: accentColor),
+                      style: TextStyle(fontSize: fontSizeAttr, color: Theme.of(context).colorScheme.onSurface),
                     ),
                     SizedBox(height: columnItemPadding),
                     Text(
                       bodyTypes[car.body]!,
-                      style: TextStyle(fontSize: fontSizeAttr, color: accentColor),
+                      style: TextStyle(fontSize: fontSizeAttr, color: Theme.of(context).colorScheme.onSurface),
                     ),
                     SizedBox(height: columnItemPadding),
                     Text(
                       "${car.nrOfSeats} stoelen",
-                      style: TextStyle(fontSize: fontSizeAttr, color: accentColor),
+                      style: TextStyle(fontSize: fontSizeAttr, color: Theme.of(context).colorScheme.onSurface),
                     ),
                   ],
                 ),
@@ -131,12 +132,12 @@ class SharedWidgets {
   static Widget rentalCard(Rental rental, BuildContext context) =>
       GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => RentalInspectionView(rental: rental,),
-            ),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => RentalInspectionView(rental: rental,),
+          //   ),
+          // );
         },
         child: Card(
           shape: RoundedRectangleBorder(

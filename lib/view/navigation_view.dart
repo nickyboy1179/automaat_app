@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:automaat_app/view/profile_view.dart';
-import 'package:automaat_app/view/rental_view.dart';
+// import 'package:automaat_app/view/rental_view.dart';
 import 'package:automaat_app/view/notifications_view.dart';
 import 'package:automaat_app/view/car_list_view.dart';
 
@@ -35,7 +35,7 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: SharedWidgets.backgroundColor,
+      color: Theme.of(context).colorScheme.surface,
       child: SafeArea(
         child: Padding(
         padding: EdgeInsets.only(top: 10.0),
@@ -87,7 +87,7 @@ class _NavigationState extends State<Navigation> {
                     child: Navigator(
                       key: rentalNavigatorKey,
                       onGenerateRoute: (settings) => MaterialPageRoute(
-                        builder: (context) => RentalView(),
+                        builder: (context) => CarList(),
                       ),
                     ),
                   ),

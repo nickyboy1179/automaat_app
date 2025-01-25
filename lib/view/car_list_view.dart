@@ -1,6 +1,6 @@
 import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:flutter/material.dart';
-import 'package:automaat_app/viewmodel/car_list_viewmodel.dart';
+import 'package:automaat_app/controller/car_list_viewmodel.dart';
 import 'package:automaat_app/common/shared_widgets.dart';
 
 class CarList extends StatefulWidget {
