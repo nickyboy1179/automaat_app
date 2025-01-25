@@ -17,11 +17,14 @@ class _NavigationState extends State<Navigation> {
   int currentPageIndex = 0;
 
   final GlobalKey<NavigatorState> carListNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> rentalNavigatorKey = GlobalKey<NavigatorState>();
 
   void _onNavigationTap(int index) {
     switch (index) {
       case 0:
         carListNavigatorKey.currentState?.popUntil((route) => route.isFirst);
+      case 2:
+        rentalNavigatorKey.currentState?.popUntil((route) => route.isFirst);
     }
 
     setState(() {
@@ -79,7 +82,15 @@ class _NavigationState extends State<Navigation> {
                 ),
                 Offstage(
                   offstage: currentPageIndex != 2,
-                  child: RentalView(),
+                  child: PopScope(
+                    canPop: false,
+                    child: Navigator(
+                      key: rentalNavigatorKey,
+                      onGenerateRoute: (settings) => MaterialPageRoute(
+                        builder: (context) => RentalView(),
+                      ),
+                    ),
+                  ),
                 ),
                 Offstage(
                   offstage: currentPageIndex != 3,

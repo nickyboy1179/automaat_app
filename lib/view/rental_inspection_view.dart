@@ -1,8 +1,7 @@
-import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:flutter/material.dart';
-import 'package:automaat_app/viewmodel/car_list_viewmodel.dart';
 import 'package:automaat_app/common/shared_widgets.dart';
-// import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../model/rest_model/rental_model.dart';
 
@@ -94,6 +93,11 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
             ),
           ),
           SizedBox(height: 16),
+          SizedBox(
+            height: 300,
+            width: 400,
+            child: osm(rental.latitude, rental.longitude),
+          ),
         ],
       ),
     );
@@ -127,23 +131,33 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
     );
   }
 
-  // Widget _OSMmap() {
-  //   return OSMViewer(
-  //     controller: SimpleMapController(
-  //       initPosition: GeoPoint(
-  //         latitude: rental.latitude,
-  //         longitude: rental.longitude,
-  //       ),
-  //       markerHome: const MarkerIcon(
-  //         icon: Icon(Icons.home),
-  //       ),
-  //     ),
-  //     zoomOption: const ZoomOption(
-  //       initZoom: 16,
-  //       minZoomLevel: 11,
-  //     ),
-  //   );
-  // }
+  Widget osm(double latitude, double longitude) {
+    return FlutterMap(
+      options: MapOptions(
+        initialCenter: LatLng(latitude, longitude),
+        initialZoom: 11,
+      ),
+      children: [
+        TileLayer(
+          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+          userAgentPackageName: 'com.example.app',
+        ),
+        MarkerLayer(
+          markers: [
+            Marker(
+              point: LatLng(latitude, longitude),
+              width: 120,
+              height: 120,
+              child: Icon(
+                Icons.car_rental,
+                color: Colors.blue,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
   BoxDecoration _cardDecoration() {
     return BoxDecoration(
