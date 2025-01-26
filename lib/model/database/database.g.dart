@@ -146,8 +146,11 @@ class _$CarDao extends CarDao {
   final InsertionAdapter<Car> _carInsertionAdapter;
 
   @override
-  Future<List<Car>> findAllCars() async {
-    return _queryAdapter.queryList('SELECT * FROM Car',
+  Future<List<Car>> getCarsByPage(
+    int offset,
+    int pageSize,
+  ) async {
+    return _queryAdapter.queryList('SELECT * FROM Car LIMIT ?2 OFFSET ?1',
         mapper: (Map<String, Object?> row) => Car(
             id: row['id'] as int,
             brand: row['brand'] as String,
@@ -164,7 +167,8 @@ class _$CarDao extends CarDao {
             nrOfSeats: row['nrOfSeats'] as int,
             body: row['body'] as String,
             longitude: row['longitude'] as double,
-            latitude: row['latitude'] as double));
+            latitude: row['latitude'] as double),
+        arguments: [offset, pageSize]);
   }
 
   @override

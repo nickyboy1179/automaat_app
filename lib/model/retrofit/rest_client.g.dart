@@ -84,8 +84,8 @@ class _RestClient implements RestClient {
 
   @override
   Future<List<Car>> getCars(
-    String page,
-    String size,
+    int page,
+    int size,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{

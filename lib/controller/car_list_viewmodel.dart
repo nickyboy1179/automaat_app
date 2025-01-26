@@ -1,3 +1,5 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import '../locator.dart';
 import '../model/database/database.dart';
 import '../model/rest_model/car_model.dart';
@@ -5,18 +7,53 @@ import '../model/retrofit/rest_client.dart';
 
 class CarListViewmodel {
   final _restClient = locator<RestClient>();
-  final _carDao = locator<AppDatabase>();
+  final _database = locator<AppDatabase>();
+  final _secureStorage = locator<FlutterSecureStorage>();
+  Set<int> loadedPages = {};
+  int page = 0;
+  int size = 10;
 
-  Future<List<Car>> fetchCarList({int page = 0, int size = 8}) async {
-    // final localCars = await _carDao.carDao.findAllCars();
-    //
-    // if (localCars.isNotEmpty) {
-    //   return localCars;
-    // }
+  Future<void> loadLoadedPages() async {
+    final String? loadedPagesString = await _secureStorage.read(key: 'loadedPages');
 
-    final networkCars = await _restClient.getCars(page.toString(), size.toString());
-    // await _carDao.carDao.insertCars(networkCars);
+    if (loadedPagesString != null && loadedPagesString.isNotEmpty) {
+      loadedPages = loadedPagesString.split(',').map(int.parse).toSet();
+    }
+  }
 
-    return networkCars;
+  Future<void> saveLoadedPages() async {
+    final loadedPagesString = loadedPages.join(',');
+    await _secureStorage.write(key: 'loadedPages', value: loadedPagesString);
+  }
+
+  Future<List<Car>> fetchCarList({
+    bool forceNetworkFetch = false,
+  }) async {
+    List<Car> cars = [];
+
+    if (loadedPages.contains(page) && !forceNetworkFetch) {
+      final localCars = await _database.carDao.getCarsByPage(page * size, size);
+      if (localCars.isNotEmpty) {
+        cars.addAll(localCars);
+      }
+    }
+
+    if (cars.isEmpty || forceNetworkFetch) {
+      final List<Car> fetchedCars = await _restClient.getCars(page, size);
+
+      if (fetchedCars.isNotEmpty && loadedPages.contains(page) == false) {
+        await _database.carDao.insertCars(fetchedCars);
+        loadedPages.add(page);
+        await saveLoadedPages();
+      }
+
+      cars.addAll(fetchedCars);
+    }
+
+    return cars;
+  }
+
+  void incrementPage() {
+    page++;
   }
 }

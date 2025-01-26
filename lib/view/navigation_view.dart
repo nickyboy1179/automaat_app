@@ -87,7 +87,7 @@ class _NavigationState extends State<Navigation> {
                     child: Navigator(
                       key: rentalNavigatorKey,
                       onGenerateRoute: (settings) => MaterialPageRoute(
-                        builder: (context) => CarList(),
+                        builder: (context) => Profile(),
                       ),
                     ),
                   ),

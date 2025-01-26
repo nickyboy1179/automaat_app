@@ -17,8 +17,8 @@ abstract class RestClient {
 
   @GET(ApiRoutes.cars)
   Future<List<Car>> getCars(
-      @Query("page") String page,
-      @Query("size") String size
+      @Query("page") int page,
+      @Query("size") int size
       );
 
   @POST(ApiRoutes.rentals)
