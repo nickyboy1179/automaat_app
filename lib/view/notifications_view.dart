@@ -2,8 +2,8 @@ import 'package:automaat_app/provider/network_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Notifications extends StatelessWidget {
-  const Notifications({super.key});
+class NotificationsView extends StatelessWidget {
+  const NotificationsView({super.key});
 
   @override
   Widget build(BuildContext context) {

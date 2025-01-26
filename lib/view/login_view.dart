@@ -1,3 +1,4 @@
+import 'package:automaat_app/view/navigation_view_v2.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/controller/login_viewmodel.dart';
 import 'package:flutter_svg/svg.dart';
@@ -54,7 +55,7 @@ class _LoginState extends State<Login> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasData && snapshot.data == true) {
-          return Navigation();
+          return NavigationViewV2();
         } else {
           return Container(
             color: Theme.of(context).colorScheme.surface,

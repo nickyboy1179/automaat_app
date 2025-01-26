@@ -8,8 +8,8 @@ import '../locator.dart';
 import '../main.dart';
 import '../model/rest_model/about_me_model.dart';
 
-class Profile extends StatelessWidget {
-  Profile({super.key});
+class ProfileView extends StatelessWidget {
+  ProfileView({super.key});
 
   final secureStorage = locator<FlutterSecureStorage>();
   final ProfileViewmodel profileViewmodel = ProfileViewmodel();

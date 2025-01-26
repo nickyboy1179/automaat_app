@@ -1,3 +1,4 @@
+import 'package:automaat_app/view/rental_view.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/view/profile_view.dart';
 import 'package:automaat_app/view/notifications_view.dart';
@@ -67,7 +68,7 @@ class _NavigationState extends State<Navigation> {
                 Offstage(
                   offstage: currentPageIndex != 0,
                   child: PopScope(
-                    canPop: false,
+                    canPop: true,
                     child: Navigator(
                       key: carListNavigatorKey,
                       onGenerateRoute: (settings) => MaterialPageRoute(
@@ -78,7 +79,7 @@ class _NavigationState extends State<Navigation> {
                 ),
                 Offstage(
                   offstage: currentPageIndex != 1,
-                  child: Notifications(),
+                  child: NotificationsView(),
                 ),
                 Offstage(
                   offstage: currentPageIndex != 2,
@@ -87,14 +88,14 @@ class _NavigationState extends State<Navigation> {
                     child: Navigator(
                       key: rentalNavigatorKey,
                       onGenerateRoute: (settings) => MaterialPageRoute(
-                        builder: (context) => Profile(),
+                        builder: (context) => RentalView(),
                       ),
                     ),
                   ),
                 ),
                 Offstage(
                   offstage: currentPageIndex != 3,
-                  child: Profile(),
+                  child: ProfileView(),
                 ),
               ],
             ),

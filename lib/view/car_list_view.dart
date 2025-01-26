@@ -1,3 +1,5 @@
+import 'package:automaat_app/view/car_view.dart';
+import 'package:automaat_app/view/test_view.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:automaat_app/controller/car_list_viewmodel.dart';
@@ -15,12 +17,22 @@ class _CarListState extends State<CarList> {
 
   String searchQuery = "";
   List<Car> cars = [];
-  List<Car> allCars = []; // Store the full list of cars
+  List<Car> allCars = [];
   bool isLoading = false;
   bool hasMore = true;
   bool isSearchActive = false;
 
   final ScrollController _scrollController = ScrollController();
+
+  void navigateToCarView(Car car) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TestView(
+        // car: car,
+      )
+      )
+    );
+  }
 
   @override
   void initState() {
@@ -29,9 +41,8 @@ class _CarListState extends State<CarList> {
     _scrollController.addListener(_onScroll);
   }
 
-  // Initialize the viewmodel and load persisted data
   Future<void> _initialize() async {
-    await carListViewmodel.loadLoadedPages(); // Load persisted loaded pages
+    await carListViewmodel.loadLoadedPages();
     _fetchCars();
   }
 
@@ -55,7 +66,6 @@ class _CarListState extends State<CarList> {
     setState(() => isLoading = true);
 
     try {
-      // Fetch cars (force network fetch if search is active)
       List<Car> fetchedCars = await carListViewmodel.fetchCarList(
           forceNetworkFetch: forceNetworkFetch);
 
@@ -63,13 +73,12 @@ class _CarListState extends State<CarList> {
         if (fetchedCars.isEmpty) {
           hasMore = false;
         } else {
-          allCars.addAll(fetchedCars); // Store full list of cars
-          cars.addAll(fetchedCars); // Use the full list to filter
-          carListViewmodel.incrementPage(); // Increment page to fetch the next one
+          allCars.addAll(fetchedCars);
+          cars.addAll(fetchedCars);
+          carListViewmodel.incrementPage();
         }
       });
 
-      // Filter fetched cars based on the search query
       if (isSearchActive && searchQuery.isNotEmpty) {
         setState(() {
           cars = allCars.where((car) {
@@ -90,14 +99,13 @@ class _CarListState extends State<CarList> {
     setState(() {
       searchQuery = '';
       isSearchActive = false;
-      cars = List.from(allCars); // Reset to the full list of cars
+      cars = List.from(allCars);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -108,9 +116,9 @@ class _CarListState extends State<CarList> {
                   isSearchActive = searchQuery.isNotEmpty;
                 });
                 if (searchQuery.isEmpty) {
-                  _clearSearch(); // If search is cleared, reset list
+                  _clearSearch();
                 } else {
-                  _fetchCars(forceNetworkFetch: false); // Trigger fetching on search
+                  _fetchCars(forceNetworkFetch: false);
                 }
               },
               decoration: InputDecoration(
@@ -138,13 +146,14 @@ class _CarListState extends State<CarList> {
                   car: car,
                   color: Theme.of(context).colorScheme.surface,
                   onColor: Theme.of(context).colorScheme.onSurface,
-                  onPressed: () {},
+                  onPressed: () {
+                    navigateToCarView(car);
+                  },
                 );
               },
             ),
           ),
         ],
-      ),
-    );
+      );
   }
 }
