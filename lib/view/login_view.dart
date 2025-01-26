@@ -29,11 +29,11 @@ class _LoginState extends State<Login> {
       var boolResult = await loginViewmodel.authenticate(email, password);
 
       if (boolResult) {
-        if (mounted) {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => Navigation()),
-          );
-        }
+        // if (mounted) {
+        //   Navigator.of(context).push(
+        //     MaterialPageRoute(builder: (context) => ),
+        //   );
+        // }
       } else {
         setState(() {
           _errorMessage = "Email/wachtwoord combinatie ongeldig";
@@ -72,7 +72,7 @@ class _LoginState extends State<Login> {
                     child: TextFormField(
                         validator: (value) {
                           final RegExp emailRegex =
-                          RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+                          RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)*");
                           if (value == null || value.isEmpty) {
                             return "Vul een e-mailadres in";
                           } else if (!emailRegex.hasMatch(value)) {

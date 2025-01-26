@@ -14,7 +14,7 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  int currentPageIndex = 0;
+  int currentPageIndex = 3;
 
   final GlobalKey<NavigatorState> carListNavigatorKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> rentalNavigatorKey = GlobalKey<NavigatorState>();
@@ -38,7 +38,7 @@ class _NavigationState extends State<Navigation> {
       color: Theme.of(context).colorScheme.surface,
       child: SafeArea(
         child: Padding(
-        padding: EdgeInsets.only(top: 10.0),
+          padding: EdgeInsets.only(top: 10.0),
           child: Scaffold(
             bottomNavigationBar: NavigationBar(
               selectedIndex: currentPageIndex,

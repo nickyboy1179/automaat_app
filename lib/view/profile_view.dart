@@ -1,6 +1,5 @@
 import 'package:automaat_app/common/shared_widgets.dart';
 import 'package:automaat_app/controller/profile_viewmodel.dart';
-import 'package:automaat_app/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
@@ -44,21 +43,6 @@ class Profile extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          ElevatedButton(
-            style: SharedWidgets.automaatConfirmButtonStyle,
-            onPressed: () => {
-              print("toggleing now!"),
-              context.read<ThemeProvider>().toggleTheme(),
-              print("should have toggled?"),
-            },
-            child: Text(
-              "Toggle theme",
-              style: TextStyle(
-                fontSize: 22,
-                color: Colors.white,
-              ),
-            ),
-          ),
         ])));
   }
 }

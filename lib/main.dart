@@ -1,5 +1,4 @@
 import 'package:automaat_app/provider/network_state_provider.dart';
-import 'package:automaat_app/provider/theme_provider.dart';
 import 'package:automaat_app/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/locator.dart';
@@ -14,9 +13,6 @@ void main() {
     providers: [
       ChangeNotifierProvider(
         create: (context) => NetworkStateProvider(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ThemeProvider(),
       ),
     ],
     child: const AutomaatApp(),
@@ -38,7 +34,8 @@ class AutomaatApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Automaat ride',
-        theme: context.watch<ThemeProvider>().themeData,
+        theme: lightMode,
+        darkTheme: darkMode,
         home: FutureBuilder<bool>(
           future: isLoggedIn(),
           builder: (context, snapshot) {
