@@ -14,7 +14,7 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  int currentPageIndex = 3;
+  int currentPageIndex = 0;
 
   final GlobalKey<NavigatorState> carListNavigatorKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> rentalNavigatorKey = GlobalKey<NavigatorState>();
@@ -34,10 +34,13 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).colorScheme.surface,
-      child: SafeArea(
-        child: Padding(
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0, // Remove shadow
+          toolbarHeight: 0,
+        ),
+        body: Padding(
           padding: EdgeInsets.only(top: 10.0),
           child: Scaffold(
             bottomNavigationBar: NavigationBar(
@@ -100,7 +103,6 @@ class _NavigationState extends State<Navigation> {
             ),
           ),
         ),
-      ),
     );
   }
 }

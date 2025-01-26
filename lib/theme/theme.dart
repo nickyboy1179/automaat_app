@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   colorScheme: ColorScheme.light(
     surface: Colors.white,
     onSurface: Colors.purple.shade400,
-    primary: Colors.white,
-    onPrimary: Colors.purple.shade600,
-    secondary: Colors.white,
-    onSecondary: Colors.purple.shade200,
+    primary: Colors.purple.shade400,
+    onPrimary: Colors.white,
+    secondary: Colors.purple.shade100,
+    onSecondary: Colors.white,
   ),
+  appBarTheme: AppBarTheme(
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // Transparent background
+      statusBarIconBrightness: Brightness.dark, // Dark icons for light mode
+    ),
+  )
 );
 
 ThemeData darkMode = ThemeData(
@@ -17,9 +24,15 @@ ThemeData darkMode = ThemeData(
   colorScheme: ColorScheme.dark(
     surface: Colors.grey.shade900,
     onSurface: Colors.white,
-    primary: Colors.grey.shade700,
-    onPrimary: Colors.white,
-    secondary: Colors.grey.shade500,
-    onSecondary: Colors.white,
+    primary: Colors.white,
+    onPrimary: Colors.grey.shade900,
+    secondary: Colors.white,
+    onSecondary: Colors.grey.shade900,
   ),
+  appBarTheme: AppBarTheme(
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // Transparent background
+      statusBarIconBrightness: Brightness.light, // Dark icons for light mode
+    ),
+  )
 );
