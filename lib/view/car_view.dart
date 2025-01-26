@@ -2,7 +2,7 @@
 // import 'package:automaat_app/view/rent_car_view.dart';
 // import 'package:flutter/material.dart';
 // import 'package:automaat_app/model/rest_model/car_model.dart';
-// import 'package:automaat_app/common/shared_widgets.dart';
+// import 'package:automaat_app/common/static_elements.dart';
 //
 // import '../controller/car_viewmodel.dart';
 //

@@ -15,8 +15,11 @@ abstract class RestClient {
   @POST(ApiRoutes.authenticate)
   Future<TokenResponse> authenticate(@Body() AuthRequest authRequest);
 
-  @GET("${ApiRoutes.cars}?size=30")
-  Future<List<Car>> getCars();
+  @GET(ApiRoutes.cars)
+  Future<List<Car>> getCars(
+      @Query("page") String page,
+      @Query("size") String size
+      );
 
   @POST(ApiRoutes.rentals)
   Future<void> postRental(@Body() Rental rental);
@@ -28,13 +31,15 @@ abstract class RestClient {
   Future<Rental> getRentalById(@Path('id') String id);
 
   @GET(ApiRoutes.rentals)
-  Future<List<Rental>> getRentalsByCustomerId(@Query("customerId.equals") String id,
+  Future<List<Rental>> getRentalsByCustomerId(
+      @Query("customerId.equals") String id,
       @Query("page") String page,
       @Query("size") String size,
       );
 
   @GET(ApiRoutes.rentals)
-  Future<List<Rental>> getRentalsByCarIdAndState(@Query("state.notIn") String stateNotIn,
+  Future<List<Rental>> getRentalsByCarIdAndState(
+      @Query("state.notIn") String stateNotIn,
       @Query("carId.equals") String carId,
       @Query("page") String page,
       @Query("size") String size,

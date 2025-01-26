@@ -83,9 +83,15 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<List<Car>> getCars() async {
+  Future<List<Car>> getCars(
+    String page,
+    String size,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'size': size,
+    };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<List<Car>>(Options(
@@ -95,7 +101,7 @@ class _RestClient implements RestClient {
     )
         .compose(
           _dio.options,
-          '/cars?size=30',
+          '/cars',
           queryParameters: queryParameters,
           data: _data,
         )

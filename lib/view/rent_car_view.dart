@@ -1,5 +1,5 @@
 // import 'package:flutter/material.dart';
-// import 'package:automaat_app/common/shared_widgets.dart';
+// import 'package:automaat_app/common/static_elements.dart';
 // import '../model/rest_model/car_model.dart';
 // import '../controller/rent_car_viewmodel.dart';
 //

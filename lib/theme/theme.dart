@@ -26,7 +26,7 @@ ThemeData darkMode = ThemeData(
     onSurface: Colors.white,
     primary: Colors.white,
     onPrimary: Colors.grey.shade900,
-    secondary: Colors.white,
+    secondary: Colors.purple.shade400,
     onSecondary: Colors.grey.shade900,
   ),
   appBarTheme: AppBarTheme(

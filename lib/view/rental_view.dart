@@ -1,4 +1,4 @@
-// import 'package:automaat_app/common/shared_widgets.dart';
+// import 'package:automaat_app/common/static_elements.dart';
 // import 'package:flutter/material.dart';
 // import 'package:automaat_app/locator.dart';
 // import 'package:automaat_app/model/retrofit/rest_client.dart';
