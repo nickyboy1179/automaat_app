@@ -19,3 +19,8 @@ ngrok http 8080 --domain talented-loving-llama.ngrok-free.app
 ```
 dart pub run build_runner build
 ```
+
+## Generate optimized svg
+```
+dart run vector_graphics_compiler -i assets/foo.svg -o assets/foo.svg.vec
+```

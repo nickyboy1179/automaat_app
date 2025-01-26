@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:automaat_app/view/profile_view.dart';
-// import 'package:automaat_app/view/rental_view.dart';
 import 'package:automaat_app/view/notifications_view.dart';
 import 'package:automaat_app/view/car_list_view.dart';
-
-import '../common/shared_widgets.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation ({super.key});
