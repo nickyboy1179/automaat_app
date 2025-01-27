@@ -14,7 +14,9 @@ class CarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
@@ -181,6 +183,7 @@ class CarView extends StatelessWidget {
           ),
         ],
       ),
+        ),
     );
   }
 }

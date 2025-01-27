@@ -27,8 +27,8 @@ class _CarListState extends State<CarList> {
   void navigateToCarView(Car car) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TestView(
-        // car: car,
+      MaterialPageRoute(builder: (context) => CarView(
+        car: car,
       )
       )
     );

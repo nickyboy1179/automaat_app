@@ -7,6 +7,7 @@ class CarListItem extends StatelessWidget {
   final Color color;
   final Color onColor;
   final void Function() onPressed;
+
   CarListItem({
     super.key,
     required this.car,

@@ -1,3 +1,4 @@
+import 'package:automaat_app/component/car_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/common/static_elements.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -25,7 +26,7 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -56,14 +57,14 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
         children: [
           Row(
             children: [
-              Icon(Icons.calendar_today, color: Colors.purple),
+              Icon(Icons.calendar_today, color: Theme.of(context).colorScheme.primary),
               SizedBox(width: 8),
               Text(
                 'Informatie',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.purple,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ],
@@ -89,7 +90,7 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.purple,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
           SizedBox(height: 16),
@@ -104,7 +105,12 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
   }
 
   Widget _buildCarInfoCard(BuildContext context) {
-    return SharedWidgets.carCard(rental.car, context);
+    return CarListItem(
+        car: rental.car,
+        color: Theme.of(context).colorScheme.surface,
+        onColor: Theme.of(context).colorScheme.onSurface,
+        onPressed: (() {}),
+    );
   }
 
   Widget _buildReportButton() {
@@ -113,7 +119,7 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
       child: ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.purple,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -124,7 +130,7 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
         ),
       ),
@@ -150,7 +156,7 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
               height: 120,
               child: Icon(
                 Icons.car_rental,
-                color: Colors.blue,
+                color: Colors.lightBlueAccent,
               ),
             ),
           ],
@@ -161,7 +167,7 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
 
   BoxDecoration _cardDecoration() {
     return BoxDecoration(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       borderRadius: BorderRadius.circular(12),
       boxShadow: [
         BoxShadow(
@@ -177,7 +183,7 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
   TextStyle _infoTextStyle() {
     return TextStyle(
       fontSize: 14,
-      color: Colors.grey[700],
+      color: Theme.of(context).colorScheme.onSurface,
     );
   }
 }

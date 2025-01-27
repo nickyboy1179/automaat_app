@@ -9,7 +9,7 @@ ThemeData lightMode = ThemeData(
     primary: Colors.purple.shade400,
     onPrimary: Colors.white,
     secondary: Colors.purple.shade100,
-    onSecondary: Colors.white,
+    onSecondary: Colors.white54,
   ),
   appBarTheme: AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
