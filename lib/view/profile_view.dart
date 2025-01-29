@@ -1,12 +1,10 @@
-import 'package:automaat_app/common/static_elements.dart';
 import 'package:automaat_app/controller/profile_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:provider/provider.dart';
 import 'package:automaat_app/component/confirm_button.dart';
 import '../locator.dart';
 import '../main.dart';
-import '../model/rest_model/about_me_model.dart';
+import 'login_view.dart';
 
 class ProfileView extends StatelessWidget {
   ProfileView({super.key});
@@ -18,9 +16,9 @@ class ProfileView extends StatelessWidget {
     await secureStorage.delete(key: 'token');
 
     if (context.mounted) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AutomaatApp()),
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => Login()), // Replace with LoginScreen
+            (route) => false, // Remove all previous routes
       );
     }
   }

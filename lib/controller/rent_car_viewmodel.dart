@@ -36,11 +36,5 @@ class RentCarViewmodel {
     );
 
     await restClient.postRental(rental);
-    if (context.mounted) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => RentalView())
-      );
-    }
   }
 }

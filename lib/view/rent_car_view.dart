@@ -94,7 +94,10 @@ class RentCarViewSate extends State<RentCarView> {
           ElevatedButton(
             style: SharedWidgets.automaatConfirmButtonStyle,
             onPressed: () => {
-              rentCarViewmodel.postRental(car, _startDate!, _endDate!, context)
+              rentCarViewmodel.postRental(car, _startDate!, _endDate!, context),
+              if (context.mounted) {
+                Navigator.of(context).popUntil((route) => route.isFirst),
+              }
             },
             child: Text(
               "Bevestigen",

@@ -7,9 +7,9 @@ class NotificationsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Center(
+    return Container(
+      color: Theme.of(context).colorScheme.surface,
+      child: Center(
         child: Container(
           height: 100,
           width: 300,
