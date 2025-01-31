@@ -2,7 +2,7 @@
 
 Mobile app developed for 'mobile app development' course
 
-## Used websites
+## Useful websites
 
 Creating reactive icon: https://icon.kitchen
 Model generator from json: https://app.quicktype.io/
@@ -17,7 +17,7 @@ ngrok http 8080 --domain talented-loving-llama.ngrok-free.app
 ```
 ## Generate Retrofit class && floor database
 ```
-dart pub run build_runner build
+dart run build_runner build
 ```
 
 ## Generate optimized svg

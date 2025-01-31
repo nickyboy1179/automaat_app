@@ -1,4 +1,6 @@
 import 'package:automaat_app/component/car_list_item.dart';
+import 'package:automaat_app/component/confirm_button.dart';
+import 'package:automaat_app/view/report_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -22,8 +24,19 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
     rental = widget.rental;
   }
 
+  void _navigateToReport(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ReportView(rental: rental,),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
@@ -38,7 +51,21 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
                 SizedBox(height: 16),
                 _buildCarInfoCard(context),
                 SizedBox(height: 16),
-                _buildReportButton(),
+                ConfirmButton(
+                    text: "Schade melden",
+                    color: colorScheme.primary,
+                    onColor: colorScheme.onPrimary,
+                    onPressed: () {
+                      _navigateToReport(context);
+                    },
+                ),
+                SizedBox(height: 16),
+                ConfirmButton(
+                    text: "Einde huurtermijn",
+                    color: colorScheme.primary,
+                    onColor: colorScheme.onPrimary,
+                    onPressed: () {},
+                ),
               ],
             ),
           ),
@@ -94,7 +121,7 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
           ),
           SizedBox(height: 16),
           SizedBox(
-            height: 300,
+            height: 200,
             width: 400,
             child: osm(rental.latitude, rental.longitude),
           ),
@@ -109,30 +136,6 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
         color: Theme.of(context).colorScheme.surface,
         onColor: Theme.of(context).colorScheme.onSurface,
         onPressed: (() {}),
-    );
-  }
-
-  Widget _buildReportButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          padding: EdgeInsets.symmetric(vertical: 16),
-        ),
-        child: Text(
-          'Schade melden',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-        ),
-      ),
     );
   }
 
@@ -151,8 +154,8 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
           markers: [
             Marker(
               point: LatLng(latitude, longitude),
-              width: 120,
-              height: 120,
+              width: 200,
+              height: 200,
               child: Icon(
                 Icons.car_rental,
                 color: Colors.lightBlueAccent,

@@ -34,6 +34,7 @@ ThemeData darkMode = ThemeData(
     onSecondary: Colors.grey.shade900,
 
     // For no network buttons
+
     tertiary: Colors.grey.shade600,
     onTertiary: Colors.grey.shade300,
   ),

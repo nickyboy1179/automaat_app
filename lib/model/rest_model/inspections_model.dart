@@ -2,9 +2,9 @@ import 'dart:convert';
 
 class Inspection {
   int? id;
-  String code;
+  String? code;
   int odometer;
-  String result;
+  String? result;
   String description;
   String photo;
   String photoContentType;

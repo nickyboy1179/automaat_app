@@ -5,6 +5,7 @@ import 'package:automaat_app/model/retrofit/api_routes.dart';
 import 'package:automaat_app/model/rest_model/about_me_model.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:automaat_app/model/rest_model/rental_model.dart';
+import 'package:automaat_app/model/rest_model/inspections_model.dart';
 
 part 'rest_client.g.dart';
 
@@ -44,6 +45,9 @@ abstract class RestClient {
       @Query("page") String page,
       @Query("size") String size,
       );
+
+  @POST(ApiRoutes.inspection)
+  Future<void> postInspection(@Body() Inspection inspection);
 }
 
 @JsonSerializable()
