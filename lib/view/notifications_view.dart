@@ -17,9 +17,12 @@ class NotificationsView extends StatelessWidget {
           padding: EdgeInsets.all(16),
           child: ElevatedButton(
             style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll<Color>(Theme.of(context).colorScheme.secondary),
-              shape: WidgetStatePropertyAll<OutlinedBorder>(RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16))),
+              backgroundColor: WidgetStatePropertyAll<Color>(Theme.of(context)
+                  .colorScheme.secondary),
+              shape: WidgetStatePropertyAll<OutlinedBorder>(
+                  RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16))
+              ),
             ),
             onPressed: () => {},
             child: Text(

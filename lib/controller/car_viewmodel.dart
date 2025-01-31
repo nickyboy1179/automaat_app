@@ -1,7 +1,9 @@
 import 'package:automaat_app/locator.dart';
+import 'package:flutter/material.dart';
 import 'package:automaat_app/model/rest_model/rental_model.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:automaat_app/model/retrofit/rest_client.dart';
+import 'package:automaat_app/view/rent_car_view.dart';
 
 class CarViewmodel {
   final restClient = locator<RestClient>();
@@ -11,4 +13,11 @@ class CarViewmodel {
     return rentals.isEmpty;
   }
 
+  void onNavigate(BuildContext context, Car car) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RentCarView(car: car,)
+        ),
+    );
+  }
 }

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:automaat_app/controller/car_list_viewmodel.dart';
 import 'package:automaat_app/component/car_list_item.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/auth_provider.dart';
 
 class CarList extends StatefulWidget {
   const CarList({super.key});

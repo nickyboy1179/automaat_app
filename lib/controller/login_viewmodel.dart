@@ -1,12 +1,14 @@
 import 'package:automaat_app/locator.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../model/retrofit/rest_client.dart';
+import 'package:automaat_app/provider/auth_provider.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:automaat_app/model/retrofit/rest_client.dart';
 
-class LoginViewmodel {
+class LoginController {
   final _restClient = locator<RestClient>();
-  final _secureStorage = locator<FlutterSecureStorage>();
 
-  Future<bool> authenticate(String email, String password) async {
+  Future<bool> authenticate(BuildContext context, String email, String password) async {
+    AuthProvider auth = Provider.of<AuthProvider>(context, listen: false);
     try {
       final authRequest = AuthRequest(
         username: email,
@@ -14,18 +16,11 @@ class LoginViewmodel {
         rememberMe: true,
       );
       final response = await _restClient.authenticate(authRequest);
-      await _secureStorage.write(key: "token", value: response.id_token);
+      await auth.login(response.id_token);
       return true;
-
     } catch (e) {
       return false;
     }
   }
 
-  Future<bool> isLoggedIn() async {
-    final String? token = await _secureStorage.read(key: 'token');
-    // Wait until DI container has finished initializing.
-    await locator.allReady();
-    return token != null && token.isNotEmpty;
-  }
 }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class NetworkStateProvider with ChangeNotifier {
-  bool isConnected = true;
+  bool _isConnected = false;
 
-  // bool get isConnected => _isConnected;
+  bool get isConnected => _isConnected;
 
   NetworkStateProvider() {
     _initConnectionListener();
@@ -12,7 +12,7 @@ class NetworkStateProvider with ChangeNotifier {
 
   void _initConnectionListener() {
     InternetConnection().onStatusChange.listen((status) {
-      isConnected = status == InternetStatus.connected;
+      _isConnected = status == InternetStatus.connected;
       notifyListeners();
     });
   }

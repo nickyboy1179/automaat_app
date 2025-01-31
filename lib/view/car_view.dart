@@ -1,10 +1,13 @@
-import 'dart:convert';
-import 'package:automaat_app/view/rent_car_view.dart';
 import 'package:flutter/material.dart';
-import 'package:automaat_app/model/rest_model/car_model.dart';
-import 'package:automaat_app/common/static_elements.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
 
-import '../controller/car_viewmodel.dart';
+import 'package:automaat_app/view/rent_car_view.dart';
+import 'package:automaat_app/common/static_elements.dart';
+import 'package:automaat_app/model/rest_model/car_model.dart';
+import 'package:automaat_app/controller/car_viewmodel.dart';
+import 'package:automaat_app/provider/network_state_provider.dart';
+import 'package:automaat_app/component/confirm_button.dart';
 
 class CarView extends StatelessWidget {
   final Car car;
@@ -14,6 +17,9 @@ class CarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    NetworkStateProvider networkStateProvider = Provider.of<NetworkStateProvider>(context);
+
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: Padding(
@@ -123,64 +129,21 @@ class CarView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          FutureBuilder<bool>(
-            future: _carViewmodel.checkCarAvailable(car),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return ElevatedButton(
-                  style: SharedWidgets.automaatConfirmButtonStyleNoConnection,
-                  onPressed: () => {
 
-                  },
-                  child: Text(
-                    "Auto niet beschikbaar",
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.white54,
-                    ),
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return Center(child: Text("Error: ${snapshot.error}"));
-              } else {
-                if (snapshot.data == true) {
-                  return ElevatedButton(
-                    style: SharedWidgets.automaatConfirmButtonStyle,
-                    onPressed: () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RentCarView(
-                          car: car,
-                        )
-                        ),
-                      ),
-                    },
-                    child: Text(
-                      "Huren",
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                      ),
-                    ),
-                  );
-                } else {
-                  return ElevatedButton(
-                    style: SharedWidgets.automaatConfirmButtonStyleNoConnection,
-                    onPressed: () => {
-
-                    },
-                    child: Text(
-                      "Auto niet beschikbaar",
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white54,
-                      ),
-                    ),
-                  );
-                }
-              }
-            },
+          networkStateProvider.isConnected
+              ? ConfirmButton(
+            text: "Huren",
+            color: colorScheme.primary,
+            onColor: colorScheme.onPrimary,
+            onPressed: () {_carViewmodel.onNavigate(context, car);}
+          )
+              : ConfirmButton(
+            text: "Huren",
+            color: colorScheme.tertiary,
+            onColor: colorScheme.onTertiary,
+            onPressed: () {},
           ),
+
         ],
       ),
         ),
