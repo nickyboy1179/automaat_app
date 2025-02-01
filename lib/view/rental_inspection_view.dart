@@ -1,11 +1,12 @@
 import 'package:automaat_app/component/car_list_item.dart';
 import 'package:automaat_app/component/confirm_button.dart';
+import 'package:automaat_app/view/complete_rental_view.dart';
 import 'package:automaat_app/view/report_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../model/rest_model/rental_model.dart';
+import 'package:automaat_app/model/rest_model/rental_model.dart';
 
 class RentalInspectionView extends StatefulWidget {
   final Rental rental;
@@ -29,6 +30,15 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
       context,
       MaterialPageRoute(
         builder: (context) => ReportView(rental: rental,),
+      ),
+    );
+  }
+
+  void _navigateToRentalCompletion(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CompleteRentalView(rental: rental,),
       ),
     );
   }
@@ -64,7 +74,9 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
                     text: "Einde huurtermijn",
                     color: colorScheme.primary,
                     onColor: colorScheme.onPrimary,
-                    onPressed: () {},
+                    onPressed: () {
+                      _navigateToRentalCompletion(context);
+                    },
                 ),
               ],
             ),
@@ -144,6 +156,11 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
       options: MapOptions(
         initialCenter: LatLng(latitude, longitude),
         initialZoom: 11,
+        interactionOptions: InteractionOptions(
+          cursorKeyboardRotationOptions: CursorKeyboardRotationOptions.disabled(),
+          flags: InteractiveFlag.drag | InteractiveFlag.rotate,
+        ),
+
       ),
       children: [
         TileLayer(
