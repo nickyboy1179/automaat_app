@@ -124,13 +124,13 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<void> postRental(Rental rental) async {
+  Future<Rental> postRental(Rental rental) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(rental.toJson());
-    final _options = _setStreamType<void>(Options(
+    final _options = _setStreamType<Rental>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -146,7 +146,52 @@ class _RestClient implements RestClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    await _dio.fetch<void>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late Rental _value;
+    try {
+      _value = Rental.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<Rental> putRental(
+    Rental rental,
+    int id,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(rental.toJson());
+    final _options = _setStreamType<Rental>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/rentals/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late Rental _value;
+    try {
+      _value = Rental.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   @override
@@ -304,20 +349,20 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<void> postInspection(Inspection inspection) async {
+  Future<Inspection> postInspection(Inspection inspection) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(inspection.toJson());
-    final _options = _setStreamType<void>(Options(
+    final _options = _setStreamType<Inspection>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'inspection',
+          '/inspections',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -326,7 +371,15 @@ class _RestClient implements RestClient {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    await _dio.fetch<void>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late Inspection _value;
+    try {
+      _value = Inspection.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

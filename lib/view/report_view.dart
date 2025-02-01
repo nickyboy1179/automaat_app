@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:automaat_app/component/confirm_button.dart';
+import 'package:automaat_app/controller/report_controller.dart';
 import 'package:automaat_app/model/rest_model/rental_model.dart';
-import 'package:automaat_app/view/take_picture_view.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -15,14 +14,38 @@ class ReportView extends StatefulWidget  {
 }
 
 class ReportViewState extends State<ReportView> {
+  final ReportController controller = ReportController();
   final _formKey = GlobalKey<FormState>();
   File? _selectedImage;
   final TextEditingController _descriptionController = TextEditingController();
 
-  void _submitReport() {
+  Future<void> _submitReport(BuildContext context, Rental rental) async {
     if (_formKey.currentState!.validate()) {
       String description = _descriptionController.text;
+      bool success = await controller.submitReport(
+          rental,
+          description,
+          _selectedImage!
+      );
 
+      if (!context.mounted) return;
+
+      if (success) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text(
+            'Schadeformulier verzonden'
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text(
+            'Er is iets mis gegean, probeer het later nog eens.'
+            ),
+          ),
+        );
+      }
     }
   }
 
@@ -109,7 +132,9 @@ class ReportViewState extends State<ReportView> {
                 text: "Schadeformulier inleveren",
                 color: colorScheme.primary,
                 onColor: colorScheme.onPrimary,
-                onPressed: _submitReport
+                onPressed: () {
+                  _submitReport(context, rental);
+                },
             ),
           ],
         ),

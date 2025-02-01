@@ -3,7 +3,7 @@ import 'dart:convert';
 class Inspection {
   int? id;
   String? code;
-  int odometer;
+  int? odometer;
   String? result;
   String description;
   String photo;
@@ -44,6 +44,6 @@ class Inspection {
     "description": description,
     "photo": photo,
     "photoContentType": photoContentType,
-    "completed": completed.toIso8601String(),
+    "completed": "${completed.toIso8601String()}Z",
   };
 }

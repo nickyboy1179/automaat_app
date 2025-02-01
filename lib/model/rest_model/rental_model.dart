@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'car_model.dart';
 import 'inspections_model.dart';
 import 'customer_model.dart';

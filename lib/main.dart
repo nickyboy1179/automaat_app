@@ -7,8 +7,6 @@ import 'package:automaat_app/locator.dart';
 import 'package:automaat_app/view/login_view.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
-import 'dart:io';
-import 'package:camera/camera.dart';
 
 Future<void> main() async {
   setupLocator();

@@ -23,7 +23,10 @@ abstract class RestClient {
       );
 
   @POST(ApiRoutes.rentals)
-  Future<void> postRental(@Body() Rental rental);
+  Future<Rental> postRental(@Body() Rental rental);
+
+  @PUT("${ApiRoutes.rentals}/{id}")
+  Future<Rental> putRental(@Body() Rental rental, @Path('id') int id);
 
   @GET(ApiRoutes.aboutMe)
   Future<AboutMe> getUserInfo();
@@ -47,7 +50,7 @@ abstract class RestClient {
       );
 
   @POST(ApiRoutes.inspection)
-  Future<void> postInspection(@Body() Inspection inspection);
+  Future<Inspection> postInspection(@Body() Inspection inspection);
 }
 
 @JsonSerializable()
