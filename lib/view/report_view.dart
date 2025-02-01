@@ -69,65 +69,114 @@ class ReportViewState extends State<ReportView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Center(
+              child: Text(
+                "Schadeformulier",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(height: 24),
             Text(
-              "Report Description",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              "Beschrijving",
+              style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 8),
             TextFormField(
               controller: _descriptionController,
               maxLines: 5,
               decoration: InputDecoration(
-                hintText: "Enter report details...",
+                hintText: "Voeg beschrijving van de schade toe.",
                 border: OutlineInputBorder(),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Please enter a description";
+                  return "Voeg een beschrijving toe";
                 }
                 return null;
               },
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 24),
             Text(
-              "Attach a Picture",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              "Voeg foto toe",
+              style: TextStyle(fontSize: 16),
             ),
-
             Row(
               children: [
                 ElevatedButton.icon(
                   onPressed: () => _pickImage(ImageSource.camera),
                   icon: Icon(Icons.camera),
-                  label: Text("Take Photo"),
+                  label: Text("Foto nemen"),
                 ),
                 SizedBox(width: 8),
                 ElevatedButton.icon(
                   onPressed: () => _pickImage(ImageSource.gallery),
                   icon: Icon(Icons.photo_library),
-                  label: Text("Choose from Gallery"),
+                  label: Text("Kies foto uit gallerij"),
                 ),
               ],
             ),
-
             SizedBox(height: 16),
             _selectedImage != null
-                ? Column(
-              children: [
-                Image.file(_selectedImage!, height: 150),
-                SizedBox(height: 8),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _selectedImage = null;
-                    });
-                  },
-                  child: Text("Remove Image", style: TextStyle(color: Colors.red)),
-                ),
-              ],
+                ? Center(
+              child: Column(
+                children: [
+                  Container(
+                    height: 200,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 6,
+                          spreadRadius: 2,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Image.file(_selectedImage!),
+                  ),
+                  SizedBox(height: 8),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _selectedImage = null;
+                      });
+                    },
+                    child: Text("Foto verwijderen", style: TextStyle(color: Colors.red)),
+                  ),
+                ],
+              ),
             )
-                : Text("No image selected"),
-            SizedBox(height: 16),
+                : Center(
+              child: Column(
+                children: [
+                  Container(
+                    height: 200,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 6,
+                          spreadRadius: 2,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Icon(Icons.image_not_supported),
+                    ),
+                  ),
+                  SizedBox(height: 24),
+                  Text("Geen foto geselecteerd"),
+                  SizedBox(height: 8),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 48),
             ConfirmButton(
                 text: "Schadeformulier inleveren",
                 color: colorScheme.primary,
