@@ -80,60 +80,60 @@ class CompleteRentalViewState extends State<CompleteRentalView> {
     NetworkStateProvider networkStateProvider = Provider
         .of<NetworkStateProvider>(context);
 
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            _buildLocationCard(),
-            SizedBox(height: 8,),
-            ConfirmButton(
-                text: "Huidige locatie gebruiken",
-                color: colorScheme.secondary,
+    return SingleChildScrollView(
+      child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              _buildLocationCard(),
+              SizedBox(height: 8,),
+              ConfirmButton(
+                  text: "locatie van telefoon gebruiken",
+                  color: colorScheme.secondary,
+                  onColor: colorScheme.onPrimary,
+                  onPressed: () {
+                    _getCurrentLocation();
+                  }
+              ),
+              SizedBox(height: 16,),
+              Form(
+                key: _formKey,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  controller: _mileageController,
+                  decoration: InputDecoration(
+                    hintText: "Voer kilometerstand in",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Voer de kilometerstand in";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              SizedBox(height: 16,),
+              networkStateProvider.isConnected
+              ? ConfirmButton(
+                text: "Huurtermijn afronden",
+                color: colorScheme.primary,
                 onColor: colorScheme.onPrimary,
                 onPressed: () {
-                  _getCurrentLocation();
+                  _completeRental(context, rental, _selectedLocation!);
                 }
-            ),
-            SizedBox(height: 16,),
-            Form(
-              key: _formKey,
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                controller: _mileageController,
-                decoration: InputDecoration(
-                  hintText: "Voer kilometerstand in",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Voer de kilometerstand in";
-                  }
-                  return null;
-                },
+              ) : ConfirmButton(
+                  text: "Huurtermijn afronden",
+                  color: colorScheme.tertiary,
+                  onColor: colorScheme.onTertiary,
+                  onPressed: () {}
               ),
-            ),
-            SizedBox(height: 16,),
-            networkStateProvider.isConnected
-            ? ConfirmButton(
-              text: "Huurtermijn afronden",
-              color: colorScheme.primary,
-              onColor: colorScheme.onPrimary,
-              onPressed: () {
-                _completeRental(context, rental, _selectedLocation!);
-              }
-            ) : ConfirmButton(
-                text: "Huurtermijn afronden",
-                color: colorScheme.tertiary,
-                onColor: colorScheme.onTertiary,
-                onPressed: () {}
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
     );
   }
 
