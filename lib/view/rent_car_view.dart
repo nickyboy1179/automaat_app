@@ -70,10 +70,10 @@ class RentCarViewSate extends State<RentCarView> {
             "Geselecteerde auto:",
             style: TextStyle(
               fontSize: 22,
-              color: SharedWidgets.accentColor,
+              color: StaticElements.accentColor,
             ),
           ),
-          SharedWidgets.carCard(car, context),
+          StaticElements.carCard(car, context),
           const SizedBox(height: 20),
           Text(
             _startDate == null
@@ -81,18 +81,18 @@ class RentCarViewSate extends State<RentCarView> {
                 : 'Start: $_startDate \ninlever: $_endDate',
             style: TextStyle(
               fontSize: 22,
-              color: SharedWidgets.accentColor,
+              color: StaticElements.accentColor,
             ),
           ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async => await _pickDateRange(context),
-            style: SharedWidgets.automaatButtonStyle,
+            style: StaticElements.automaatButtonStyle,
             child: const Text('Selecteer datum'),
           ),
           const SizedBox(height: 40),
           ElevatedButton(
-            style: SharedWidgets.automaatConfirmButtonStyle,
+            style: StaticElements.automaatConfirmButtonStyle,
             onPressed: () => {
               rentCarViewmodel.postRental(car, _startDate!, _endDate!, context),
               if (context.mounted) {

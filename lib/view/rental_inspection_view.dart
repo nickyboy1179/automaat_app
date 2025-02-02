@@ -160,6 +160,7 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
 
   Widget _buildCarInfoCard(BuildContext context) {
     return CarListItem(
+        key: ValueKey(rental.car.id),
         car: rental.car,
         color: Theme.of(context).colorScheme.surface,
         onColor: Theme.of(context).colorScheme.onSurface,

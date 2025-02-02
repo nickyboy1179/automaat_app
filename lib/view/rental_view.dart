@@ -54,7 +54,7 @@ class RentalView extends StatelessWidget {
                   "Actieve reserveringen",
                   style: TextStyle(
                     fontSize: 22,
-                    color: SharedWidgets.accentColor,
+                    color: StaticElements.accentColor,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -81,7 +81,7 @@ class RentalView extends StatelessWidget {
                               "Oude reserveringen",
                               style: TextStyle(
                                 fontSize: 22,
-                                color: SharedWidgets.accentColor,
+                                color: StaticElements.accentColor,
                               ),
                             ),
                             const SizedBox(height: 8),

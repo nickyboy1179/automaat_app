@@ -28,13 +28,13 @@ class CarView extends StatelessWidget {
         children: [
           Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(SharedWidgets.borderRadius),
+              borderRadius: BorderRadius.circular(StaticElements.borderRadius),
             ),
-            elevation: SharedWidgets.elevation,
+            elevation: StaticElements.elevation,
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(SharedWidgets.borderRadius),
+                borderRadius: BorderRadius.circular(StaticElements.borderRadius),
                 child: Image.memory(
                   base64Decode(car.picture),
                   height: 200,
@@ -47,9 +47,9 @@ class CarView extends StatelessWidget {
           const SizedBox(height: 20),
           Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(SharedWidgets.borderRadius),
+              borderRadius: BorderRadius.circular(StaticElements.borderRadius),
             ),
-            elevation: SharedWidgets.elevation,
+            elevation: StaticElements.elevation,
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -59,7 +59,7 @@ class CarView extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
-                      color: SharedWidgets.accentColor,
+                      color: StaticElements.accentColor,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -67,18 +67,18 @@ class CarView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "${SharedWidgets.fuelTypes[car.fuel]}",
+                        "${StaticElements.fuelTypes[car.fuel]}",
                         style: TextStyle(
                           fontSize: 14,
-                          color: SharedWidgets.accentColor,
+                          color: StaticElements.accentColor,
                         ),
                       ),
                       SizedBox(width: _carInfoBoxWidth),
                       Text(
-                        "${SharedWidgets.bodyTypes[car.body]}",
+                        "${StaticElements.bodyTypes[car.body]}",
                         style: TextStyle(
                           fontSize: 14,
-                          color: SharedWidgets.accentColor,
+                          color: StaticElements.accentColor,
                         ),
                       ),
                       SizedBox(width: _carInfoBoxWidth),
@@ -86,14 +86,14 @@ class CarView extends StatelessWidget {
                         "${car.modelYear}",
                         style: TextStyle(
                           fontSize: 14,
-                          color: SharedWidgets.accentColor,
+                          color: StaticElements.accentColor,
                         ),
                       ),
                       SizedBox(width: _carInfoBoxWidth),
                       Text(car.options,
                           style: TextStyle(
                             fontSize: 16,
-                            color: SharedWidgets.accentColor,
+                            color: StaticElements.accentColor,
                           )),
                     ],
                   ),
@@ -103,7 +103,7 @@ class CarView extends StatelessWidget {
                       Text("${car.nrOfSeats} stoelen",
                           style: TextStyle(
                             fontSize: 16,
-                            color: SharedWidgets.accentColor,
+                            color: StaticElements.accentColor,
                           )),
                       SizedBox(width: _carInfoBoxWidth),
                       Text("€ ${car.price},00 per dag",
@@ -120,7 +120,7 @@ class CarView extends StatelessWidget {
                       Text("${car.engineSize} Motor formaat",
                           style: TextStyle(
                             fontSize: 16,
-                            color: SharedWidgets.accentColor,
+                            color: StaticElements.accentColor,
                           )),
                     ],
                   ),

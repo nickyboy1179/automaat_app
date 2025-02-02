@@ -88,7 +88,7 @@ class CompleteRentalViewState extends State<CompleteRentalView> {
               _buildLocationCard(),
               SizedBox(height: 8,),
               ConfirmButton(
-                  text: "locatie van telefoon gebruiken",
+                  text: "locatie van telefoon",
                   color: colorScheme.secondary,
                   onColor: colorScheme.onPrimary,
                   onPressed: () {

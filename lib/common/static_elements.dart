@@ -7,7 +7,7 @@ import '../model/rest_model/car_model.dart';
 import '../model/rest_model/rental_model.dart';
 import '../view/car_view.dart';
 
-class SharedWidgets {
+class StaticElements {
   static final double borderRadius = 16.0;
   static final double columnItemPadding = 2;
   static final double outerCardPadding = 4.0;
@@ -54,11 +54,11 @@ class SharedWidgets {
   };
 
   static final Map<String, String> bodyTypes = {
-    "SUV": "Suv",
+    "SUV": "SUV",
     "SEDAN": "Sedan",
     "HATCHBACK": "Hatchback",
     "TRUCK": "Truck",
-    "STATIONWAGON": "Stationwagen",
+    "STATIONWAGON": "Stationwagon",
   };
 
   static Widget carCard(Car car, BuildContext context) => Padding(
