@@ -75,6 +75,13 @@ class _CarListState extends State<CarList> {
     return false;
   }
 
+  void _resetFilers() {
+    for (MapEntry e in _selectedFilters.entries) {
+      _selectedFilters[e.key] = null;
+    }
+    _fetchCars();
+  }
+
   Future<void> _fetchCars({bool forceNetworkFetch = false}) async {
     if (isLoading) return;
     setState(() => isLoading = true);
@@ -245,37 +252,55 @@ class _CarListState extends State<CarList> {
     return ExpansionTile(
       title: Text("Filter auto's"),
       children: [
-        Wrap(
-          spacing: 8,
-          children: [
-            _filterOptionsSelections(
-              "Brandstoftype",
-              ["Benzine", "Diesel", "Elektrisch", "Hybride"],
-              "fuel",
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.sizeOf(context).height * 0.3,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Wrap(
+                  spacing: 8,
+                  children: [
+                    _filtersActive()
+                    ? ElevatedButton(
+                      onPressed: () {
+                        _resetFilers();
+                      },
+                      child: Text("Filters verwijderen"))
+                    : SizedBox(),
+                    _filterOptionsSelections(
+                      "Brandstoftype",
+                      ["Benzine", "Diesel", "Elektrisch", "Hybride"],
+                      "fuel",
+                    ),
+                    _filterOptionsSelections(
+                      "Carrosserie",
+                      ["Sedan", "Hatchback", "SUV", "Stationwagon", "Truck"],
+                      "body",
+                    ),
+                    _filterOptionsSelections(
+                      "Bouwjaar",
+                      ["2019", "2020", "2021", "2022", "2023"],
+                      "modelYear",
+                    ),
+                    _filterOptionsSelections(
+                      "Merk",
+                      ["Audi", "BMW", "Mercedes-Benz", "Toyota", "Jeep",
+                      "Hyundai", "Chevrolet", "Subaru", "Ford", "Honda",
+                      "Nissan",],
+                      "brand",
+                    ),
+                    _filterOptionsSelections(
+                      "Aantal stoelen",
+                      ["5"],
+                      "nrOfSeats",
+                    ),
+                  ],
+                ),
+              ],
             ),
-            _filterOptionsSelections(
-              "Carrosserie",
-              ["Sedan", "Hatchback", "SUV", "Stationwagon", "Truck"],
-              "body",
-            ),
-            _filterOptionsSelections(
-              "Bouwjaar",
-              ["2019", "2020", "2021", "2022", "2023"],
-              "modelYear",
-            ),
-            _filterOptionsSelections(
-              "Merk",
-              ["Audi", "BMW", "Mercedes-Benz", "Toyota", "Jeep",
-              "Hyundai", "Chevrolet", "Subaru", "Ford", "Honda",
-              "Nissan",],
-              "brand",
-            ),
-            _filterOptionsSelections(
-              "Aantal stoelen",
-              ["5"],
-              "nrOfSeats",
-            ),
-          ],
+          ),
         ),
       ],
     );
