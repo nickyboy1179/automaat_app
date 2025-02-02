@@ -1,9 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../locator.dart';
-import '../model/database/database.dart';
-import '../model/rest_model/car_model.dart';
-import '../model/retrofit/rest_client.dart';
+import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/database/database.dart';
+import 'package:automaat_app/model/rest_model/car_model.dart';
+import 'package:automaat_app/model/retrofit/rest_client.dart';
 
 class CarListViewmodel {
   final _restClient = locator<RestClient>();

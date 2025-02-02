@@ -13,7 +13,7 @@ ThemeData lightMode = ThemeData(
 
     // For no network buttons
     tertiary: Colors.grey.shade600,
-    onTertiary: Colors.grey.shade300,
+    onTertiary: Colors.grey.shade500,
   ),
   appBarTheme: AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
@@ -36,7 +36,7 @@ ThemeData darkMode = ThemeData(
     // For no network buttons
 
     tertiary: Colors.grey.shade600,
-    onTertiary: Colors.grey.shade300,
+    onTertiary: Colors.grey.shade500,
   ),
   appBarTheme: AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(

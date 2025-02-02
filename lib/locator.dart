@@ -1,8 +1,8 @@
-import 'package:automaat_app/model/database/dao/car_dao.dart';
+import 'package:automaat_app/database/dao/car_dao.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'model/database/database.dart';
+import 'database/database.dart';
 import 'model/retrofit/rest_client.dart';
 import 'model/retrofit/dio_client.dart';
 

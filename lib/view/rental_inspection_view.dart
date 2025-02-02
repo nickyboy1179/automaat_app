@@ -5,8 +5,9 @@ import 'package:automaat_app/view/report_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-
 import 'package:automaat_app/model/rest_model/rental_model.dart';
+import 'package:provider/provider.dart';
+import 'package:automaat_app/provider/network_state_provider.dart';
 
 class RentalInspectionView extends StatefulWidget {
   final Rental rental;
@@ -46,6 +47,8 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
+    NetworkStateProvider networkStateProvider = Provider
+        .of<NetworkStateProvider>(context);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -61,23 +64,36 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
                 SizedBox(height: 16),
                 _buildCarInfoCard(context),
                 SizedBox(height: 16),
-                ConfirmButton(
+                networkStateProvider.isConnected
+                ? ConfirmButton(
                     text: "Schade melden",
                     color: colorScheme.primary,
                     onColor: colorScheme.onPrimary,
                     onPressed: () {
                       _navigateToReport(context);
                     },
+                ) : ConfirmButton(
+                    text: "Schade melden",
+                    color: colorScheme.tertiary,
+                    onColor: colorScheme.onTertiary,
+                    onPressed: () {},
                 ),
                 SizedBox(height: 16),
-                ConfirmButton(
-                    text: "Einde huurtermijn",
-                    color: colorScheme.primary,
-                    onColor: colorScheme.onPrimary,
-                    onPressed: () {
-                      _navigateToRentalCompletion(context);
-                    },
-                ),
+                rental.state != "PICKUP" && rental.state != "RETURNED"
+                ? networkStateProvider.isConnected
+                    ? ConfirmButton(
+                  text: "Huurtermijn beëindigen",
+                  color: colorScheme.primary,
+                  onColor: colorScheme.onPrimary,
+                  onPressed: () {
+                    _navigateToRentalCompletion(context);
+                  },
+                ) : ConfirmButton(
+                  text: "Huurtermijn beëindigen",
+                  color: colorScheme.tertiary,
+                  onColor: colorScheme.onTertiary,
+                  onPressed: () {},
+                ) : SizedBox()
               ],
             ),
           ),

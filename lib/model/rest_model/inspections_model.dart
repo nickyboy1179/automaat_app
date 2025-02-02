@@ -5,10 +5,10 @@ class Inspection {
   String? code;
   int? odometer;
   String? result;
-  String description;
-  String photo;
-  String photoContentType;
-  DateTime completed;
+  String? description;
+  String? photo;
+  String? photoContentType;
+  DateTime? completed;
 
   Inspection({
     required this.id,
@@ -44,6 +44,6 @@ class Inspection {
     "description": description,
     "photo": photo,
     "photoContentType": photoContentType,
-    "completed": "${completed.toIso8601String()}Z",
+    "completed": "${completed?.toIso8601String()}Z",
   };
 }
