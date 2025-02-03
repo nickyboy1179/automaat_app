@@ -103,7 +103,6 @@ class _CarListState extends State<CarList> {
       });
 
       bool filtersActive = _filtersActive();
-      print(filtersActive);
 
       if (filtersActive) {
         _filterCars();
@@ -221,15 +220,7 @@ class _CarListState extends State<CarList> {
           const SizedBox(height: 8),
 
           _filterWidget(),
-          _filtersActive()
-              ? ConfirmButton(
-              text: "Verwijder filters",
-              color: colorScheme.primary,
-              onColor: colorScheme.onPrimary,
-              onPressed: () {
-                _resetFilers();
-              })
-              : SizedBox(),
+
           const SizedBox(height: 8),
 
           Expanded(
@@ -263,10 +254,24 @@ class _CarListState extends State<CarList> {
     return ExpansionTile(
       title: Text("Filter auto's"),
       children: [
+        _filtersActive()
+            ? ConfirmButton(
+            text: "Verwijder filters",
+            color: Theme.of(context).colorScheme.primary,
+            onColor: Theme.of(context).colorScheme.onPrimary,
+            onPressed: () {
+              _resetFilers();
+            })
+            : ConfirmButton(
+            text: "Verwijder filters",
+            color: Theme.of(context).colorScheme.tertiary,
+            onColor: Theme.of(context).colorScheme.onTertiary,
+            onPressed: () {}),
         ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.sizeOf(context).height * 0.3,
           ),
+
           child: SingleChildScrollView(
             child: Column(
               children: [

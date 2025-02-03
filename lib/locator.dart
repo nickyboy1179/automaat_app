@@ -1,4 +1,6 @@
 import 'package:automaat_app/database/dao/car_dao.dart';
+import 'package:automaat_app/service/notification_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -25,4 +27,7 @@ void setupLocator() async{
   locator.registerSingletonWithDependencies<CarDao>(
       () => locator<AppDatabase>().carDao,
       dependsOn: [AppDatabase]);
+
+  // Notification service
+  locator.registerSingletonAsync<NotificationService>(() async => NotificationService());
 }
