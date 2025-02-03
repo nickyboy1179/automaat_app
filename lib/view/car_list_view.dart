@@ -1,3 +1,4 @@
+import 'package:automaat_app/component/confirm_button.dart';
 import 'package:automaat_app/view/car_view.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
@@ -192,6 +193,8 @@ class _CarListState extends State<CarList> {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+
     return Column(
         children: [
 
@@ -218,7 +221,15 @@ class _CarListState extends State<CarList> {
           const SizedBox(height: 8),
 
           _filterWidget(),
-
+          _filtersActive()
+              ? ConfirmButton(
+              text: "Verwijder filters",
+              color: colorScheme.primary,
+              onColor: colorScheme.onPrimary,
+              onPressed: () {
+                _resetFilers();
+              })
+              : SizedBox(),
           const SizedBox(height: 8),
 
           Expanded(
@@ -262,13 +273,6 @@ class _CarListState extends State<CarList> {
                 Wrap(
                   spacing: 8,
                   children: [
-                    _filtersActive()
-                    ? ElevatedButton(
-                      onPressed: () {
-                        _resetFilers();
-                      },
-                      child: Text("Filters verwijderen"))
-                    : SizedBox(),
                     _filterOptionsSelections(
                       "Brandstoftype",
                       ["Benzine", "Diesel", "Elektrisch", "Hybride"],
