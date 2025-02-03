@@ -18,23 +18,6 @@ class NotificationsView extends StatelessWidget {
         children: [
           ElevatedButton(
               onPressed: () async {
-                if (!await notifService.isNotificationScheduled()) {
-                  DateTime scheduledTime =
-                      DateTime.now().add(Duration(seconds: 2));
-                  notifService.scheduleNotificationOnce(
-                    id: 1,
-                    title: "Test notificatie",
-                    body: "Deze app is echt gewelidg man!",
-                    scheduledDate: scheduledTime,
-                  );
-                }
-              },
-              child: const Text("send scheduled notification")),
-          SizedBox(
-            height: 16,
-          ),
-          ElevatedButton(
-              onPressed: () async {
                 notifService.showNotification(
                   title: "Test notificatie",
                   body: "Deze app is echt gewelidg man!",

@@ -1,6 +1,5 @@
 import 'package:automaat_app/provider/auth_provider.dart';
 import 'package:automaat_app/provider/network_state_provider.dart';
-import 'package:automaat_app/service/notification_service.dart';
 import 'package:automaat_app/theme/theme.dart';
 import 'package:automaat_app/view/navigation_view_v2.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -56,15 +58,10 @@ class NotificationService {
     _initialized = true;
   }
 
-  Future<void> saveScheduledNotification(int id) async {
-    await secureStorage.write(key: "scheduled_notification", value: id.toString());
-  }
-
   Future<bool> isNotificationScheduled() async {
     String? storedId = await secureStorage.read(key: "scheduled_notification");
     return storedId != null;
   }
-
 
   NotificationDetails notificationDetails() {
     return const NotificationDetails(
@@ -74,6 +71,9 @@ class NotificationService {
         channelDescription: 'Daily Notification Channel',
         importance: Importance.max,
         priority: Priority.high,
+        playSound: true,
+        enableLights: true,
+        enableVibration: true,
         icon: '@mipmap/ic_launcher',
       ),
       iOS: DarwinNotificationDetails(),
@@ -104,29 +104,41 @@ class NotificationService {
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
+    _saveScheduledNotification(id, scheduledDate);
   }
 
-  Future<void> scheduleNotificationOnce({
-    required int id,
-    required String title,
-    required String body,
-    required DateTime scheduledDate,
-  }) async {
-    if (await isNotificationScheduled()) {
-      print("🚫 Notification already scheduled, skipping...");
-      return;
-    }
+  Future<void> _saveScheduledNotification(int id, DateTime scheduledDate) async {
+    String? storedNotifications = await secureStorage.read(key: 'scheduled_notifications');
+    Map<String, dynamic> notificationsMap = storedNotifications != null
+        ? jsonDecode(storedNotifications)
+        : {};
 
-    await scheduleNotification(id: id, title: title, body: body, scheduledDate: scheduledDate);
-    await saveScheduledNotification(id);
-    print("✅ Notification scheduled for $scheduledDate");
+    notificationsMap[id.toString()] = scheduledDate.toIso8601String();
+
+    await secureStorage.write(key:'scheduled_notifications', value: jsonEncode(notificationsMap));
+  }
+
+  Future<Map<int, DateTime>> getScheduledNotifications() async {
+    String? storedNotifications = await secureStorage.read(key: 'scheduled_notifications');
+    if (storedNotifications == null) return {};
+
+    Map<String, dynamic> notificationsMap = jsonDecode(storedNotifications);
+    return notificationsMap.map((key, value) => MapEntry(int.parse(key), DateTime.parse(value)));
   }
 
   Future<void> cancelNotification(int id) async {
     await notificationsPlugin.cancel(id);
+
+    String? storedNotifications = await secureStorage.read(key: 'scheduled_notifications');
+    if (storedNotifications != null) {
+      Map<String, dynamic> notificationsMap = jsonDecode(storedNotifications);
+      notificationsMap.remove(id.toString());
+      await secureStorage.write(key: 'scheduled_notifications', value: jsonEncode(notificationsMap));
+    }
   }
 
   Future<void> cancelAllNotifications() async {
     await notificationsPlugin.cancelAll();
+    await secureStorage.delete(key: 'scheduled_notifications');
   }
 }
