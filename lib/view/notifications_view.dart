@@ -14,15 +14,34 @@ class NotificationsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.surface,
-      child: Center(
-        child: ElevatedButton(
-            onPressed: () async {
-              notifService.showNotification(
-                title: "Test notificatie",
-                body: "Deze app is echt gewelidg man!",
-              );
-            },
-            child: const Text("send notification")),
+      child: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () async {
+                if (!await notifService.isNotificationScheduled()) {
+                  DateTime scheduledTime =
+                      DateTime.now().add(Duration(seconds: 2));
+                  notifService.scheduleNotificationOnce(
+                    id: 1,
+                    title: "Test notificatie",
+                    body: "Deze app is echt gewelidg man!",
+                    scheduledDate: scheduledTime,
+                  );
+                }
+              },
+              child: const Text("send scheduled notification")),
+          SizedBox(
+            height: 16,
+          ),
+          ElevatedButton(
+              onPressed: () async {
+                notifService.showNotification(
+                  title: "Test notificatie",
+                  body: "Deze app is echt gewelidg man!",
+                );
+              },
+              child: const Text("send notification now")),
+        ],
       ),
     );
   }
