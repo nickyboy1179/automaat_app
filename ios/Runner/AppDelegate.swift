@@ -11,7 +11,7 @@ import flutter_local_notifications
   ) -> Bool {
     //flutter notifications
     FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
-    GeneratedPluginRegistrant.register(with registry)}
+        GeneratedPluginRegistrant.register(with: registry)}
 
     GeneratedPluginRegistrant.register(with: self)
     //flutter notifications
