@@ -31,7 +31,6 @@ class RentCarViewmodel {
       fromDate: DateFormat('yyyy-MM-dd').format(startDate),
       toDate: DateFormat('yyyy-MM-dd').format(endDate),
       state: 'RESERVED',
-      inspections: null,
       customer: customer,
       car: car,
     );

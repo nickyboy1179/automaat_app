@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:floor/floor.dart';
 
+@entity
 class Customer {
+  @primaryKey
   int id;
   int nr;
   String lastName;

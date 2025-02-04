@@ -3,13 +3,12 @@ import 'package:automaat_app/view/rental_inspection_view.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/locator.dart';
 import 'package:automaat_app/model/retrofit/rest_client.dart';
-import 'package:automaat_app/controller/rental_viewmodel.dart';
+import 'package:automaat_app/controller/rental_controller.dart';
 import 'package:automaat_app/model/rest_model/rental_model.dart';
-
-import '../component/rental_card_item.dart';
+import 'package:automaat_app/component/rental_card_item.dart';
 
 class RentalView extends StatelessWidget {
-  final rentalViewmodel = RentalViewmodel();
+  final rentalViewmodel = RentalController();
   final restClient = locator<RestClient>();
 
   RentalView({super.key});
@@ -26,7 +25,7 @@ class RentalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: rentalViewmodel.getUserRentals(),
+      future: rentalViewmodel.getUserRentals(context),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

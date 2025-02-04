@@ -12,7 +12,11 @@ final GetIt locator = GetIt.instance;
 
 void setupLocator() async{
   // Flutter Secure Storage
-  locator.registerLazySingleton<FlutterSecureStorage>(() => FlutterSecureStorage());
+  locator.registerLazySingleton<FlutterSecureStorage>(() => FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    iOptions: IOSOptions(
+      accessibility: KeychainAccessibility.first_unlock,
+    ),));
 
   // Rest Client
   final dio = buildDioClient("https://talented-loving-llama.ngrok-free.app/api");

@@ -5,7 +5,7 @@ import 'package:automaat_app/database/database.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:automaat_app/model/retrofit/rest_client.dart';
 
-class CarListViewmodel {
+class CarListController {
   final _restClient = locator<RestClient>();
   final _database = locator<AppDatabase>();
   final _secureStorage = locator<FlutterSecureStorage>();
@@ -14,7 +14,8 @@ class CarListViewmodel {
   int size = 10;
 
   Future<void> loadLoadedPages() async {
-    final String? loadedPagesString = await _secureStorage.read(key: 'loadedPages');
+    final String? loadedPagesString =
+        await _secureStorage.read(key: 'loadedPages');
 
     if (loadedPagesString != null && loadedPagesString.isNotEmpty) {
       loadedPages = loadedPagesString.split(',').map(int.parse).toSet();

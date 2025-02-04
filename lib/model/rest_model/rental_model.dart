@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'car_model.dart';
-import 'inspections_model.dart';
 import 'customer_model.dart';
 
 class Rental {
@@ -11,7 +10,6 @@ class Rental {
   String fromDate;
   String toDate;
   String state;
-  List<Inspection>? inspections;
   Customer customer;
   Car car;
 
@@ -23,7 +21,6 @@ class Rental {
     required this.fromDate,
     required this.toDate,
     required this.state,
-    required this.inspections,
     required this.customer,
     required this.car,
   });
@@ -40,7 +37,6 @@ class Rental {
     fromDate: json["fromDate"],
     toDate: json["toDate"],
     state: json["state"],
-    inspections: json["inspections"],
     customer: Customer.fromJson(json["customer"]),
     car: Car.fromJson(json["car"]),
   );
@@ -53,7 +49,6 @@ class Rental {
     "fromDate": fromDate,
     "toDate": toDate,
     "state": state,
-    "inspections": inspections,
     "customer": customer.toJson(),
     "car": car.toJson(),
   };
