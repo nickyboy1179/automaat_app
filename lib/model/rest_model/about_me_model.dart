@@ -1,13 +1,12 @@
-import 'package:automaat_app/model/rest_model/rental_model.dart';
 import 'package:automaat_app/model/rest_model/system_user_model.dart';
 import 'dart:convert';
 
 class AboutMe {
   int id;
-  int nr;
+  int? nr;
   String lastName;
   String firstName;
-  String from;
+  String? from;
   SystemUser systemUser;
   List<dynamic> rentals;
   dynamic location;

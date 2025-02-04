@@ -5,10 +5,10 @@ import 'package:floor/floor.dart';
 class Customer {
   @primaryKey
   int id;
-  int nr;
+  int? nr;
   String lastName;
   String firstName;
-  String from;
+  String? from;
 
   Customer({
     required this.id,

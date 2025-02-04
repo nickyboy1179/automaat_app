@@ -12,7 +12,7 @@ class SystemUser {
   String email;
   bool activated;
   String langKey;
-  String imageUrl;
+  String? imageUrl;
   dynamic resetDate;
 
   SystemUser({

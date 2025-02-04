@@ -1,3 +1,4 @@
+import 'package:automaat_app/model/rest_model/am_register_model.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -51,6 +52,9 @@ abstract class RestClient {
 
   @POST(ApiRoutes.inspection)
   Future<Inspection> postInspection(@Body() Inspection inspection);
+
+  @POST(ApiRoutes.register)
+  Future<AmRegister> postAccount(@Body() AmRegister account);
 }
 
 @JsonSerializable()

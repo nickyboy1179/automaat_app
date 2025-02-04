@@ -1,5 +1,6 @@
 import 'package:automaat_app/component/confirm_button.dart';
 import 'package:automaat_app/provider/network_state_provider.dart';
+import 'package:automaat_app/view/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/controller/login_viewmodel.dart';
 import 'package:flutter_svg/svg.dart';
@@ -66,7 +67,7 @@ class _LoginState extends State<Login> {
               children: [
                 Container(
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   child: TextFormField(
                     validator: (value) {
                       final RegExp emailRegex = RegExp(
@@ -102,7 +103,6 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
 
                 networkStateProvider.isConnected
                     ? ConfirmButton(
@@ -118,6 +118,17 @@ class _LoginState extends State<Login> {
                     onPressed: () {},
                   ),
 
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterView(),
+                      ),
+                    );
+                  },
+                  child: Text("Nog geen account? Registreer hier"),
+                ),
               ]
             ),
           ),

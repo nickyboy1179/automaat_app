@@ -24,3 +24,8 @@ dart run build_runner build
 ```
 dart run vector_graphics_compiler -i assets/foo.svg -o assets/foo.svg.vec
 ```
+
+## Start MailDev server
+```
+docker compose -f src/main/docker/maildev.yml up
+```

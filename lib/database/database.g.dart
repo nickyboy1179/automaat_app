@@ -102,7 +102,7 @@ class _$AppDatabase extends AppDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Car` (`id` INTEGER NOT NULL, `brand` TEXT NOT NULL, `model` TEXT NOT NULL, `picture` TEXT NOT NULL, `pictureContentType` TEXT NOT NULL, `fuel` TEXT NOT NULL, `options` TEXT NOT NULL, `licensePlate` TEXT NOT NULL, `engineSize` INTEGER NOT NULL, `modelYear` INTEGER NOT NULL, `since` TEXT NOT NULL, `price` INTEGER NOT NULL, `nrOfSeats` INTEGER NOT NULL, `body` TEXT NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Customer` (`id` INTEGER NOT NULL, `nr` INTEGER NOT NULL, `lastName` TEXT NOT NULL, `firstName` TEXT NOT NULL, `from` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Customer` (`id` INTEGER NOT NULL, `nr` INTEGER, `lastName` TEXT NOT NULL, `firstName` TEXT NOT NULL, `from` TEXT, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `RentalDatabase` (`id` INTEGER, `code` TEXT NOT NULL, `longitude` REAL NOT NULL, `latitude` REAL NOT NULL, `fromDate` TEXT NOT NULL, `toDate` TEXT NOT NULL, `state` TEXT NOT NULL, `carId` INTEGER NOT NULL, `customerId` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
@@ -247,10 +247,10 @@ class _$CustomerDao extends CustomerDao {
     return _queryAdapter.queryList('SELECT * FROM Customer',
         mapper: (Map<String, Object?> row) => Customer(
             id: row['id'] as int,
-            nr: row['nr'] as int,
+            nr: row['nr'] as int?,
             lastName: row['lastName'] as String,
             firstName: row['firstName'] as String,
-            from: row['from'] as String));
+            from: row['from'] as String?));
   }
 
   @override
@@ -258,10 +258,10 @@ class _$CustomerDao extends CustomerDao {
     return _queryAdapter.query('SELECT * FROM Customer WHERE id = ?1',
         mapper: (Map<String, Object?> row) => Customer(
             id: row['id'] as int,
-            nr: row['nr'] as int,
+            nr: row['nr'] as int?,
             lastName: row['lastName'] as String,
             firstName: row['firstName'] as String,
-            from: row['from'] as String),
+            from: row['from'] as String?),
         arguments: [id]);
   }
 
