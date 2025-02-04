@@ -11,7 +11,7 @@ import 'package:automaat_app/locator.dart';
 class NotificationService {
   final notificationsPlugin = FlutterLocalNotificationsPlugin();
   bool _initialized = false;
-  FlutterSecureStorage secureStorage = locator<FlutterSecureStorage>();
+  final FlutterSecureStorage _secureStorage = locator<FlutterSecureStorage>();
 
   bool get isInitialized => _initialized;
 
@@ -59,7 +59,7 @@ class NotificationService {
   }
 
   Future<bool> isNotificationScheduled() async {
-    String? storedId = await secureStorage.read(key: "scheduled_notification");
+    String? storedId = await _secureStorage.read(key: "scheduled_notification");
     return storedId != null;
   }
 
@@ -82,11 +82,11 @@ class NotificationService {
 
   Future<void> showNotification({
     int id = 0,
-    String? title,
-    String? body,
+    required String title,
+    required String body,
   }) async {
-    return notificationsPlugin.show(
-        id, title, body, notificationDetails());
+    await notificationsPlugin.show(id, title, body, notificationDetails());
+    await _saveNotification(id, title, body, DateTime.now());
   }
 
   Future<void> scheduleNotification({
@@ -94,51 +94,92 @@ class NotificationService {
     required String title,
     required String body,
     required DateTime scheduledDate,
-}) async {
+    }) async {
     await notificationsPlugin.zonedSchedule(
-        id,
-        title,
-        body,
-        tz.TZDateTime.from(scheduledDate, tz.local),
-        notificationDetails(),
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledDate, tz.local),
+      notificationDetails(),
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
-    _saveScheduledNotification(id, scheduledDate);
+    _saveNotification(id, title, body, scheduledDate);
   }
 
-  Future<void> _saveScheduledNotification(int id, DateTime scheduledDate) async {
-    String? storedNotifications = await secureStorage.read(key: 'scheduled_notifications');
-    Map<String, dynamic> notificationsMap = storedNotifications != null
-        ? jsonDecode(storedNotifications)
-        : {};
+  Future<void> _saveNotification(
+      int id,
+      String title,
+      String body,
+      DateTime scheduledDate
+      ) async {
+    String? storedNotifications =
+        await _secureStorage.read(key: 'scheduled_notifications');
 
-    notificationsMap[id.toString()] = scheduledDate.toIso8601String();
+    Map<String, dynamic> notificationsMap = {};
 
-    await secureStorage.write(key:'scheduled_notifications', value: jsonEncode(notificationsMap));
+    if (storedNotifications != null && storedNotifications.isNotEmpty) {
+      try {
+        final decoded = jsonDecode(storedNotifications);
+        if (decoded is Map<String, dynamic>) {
+          notificationsMap = decoded;
+        }
+      } catch (e) {
+        // Handle possible JSON decoding errors
+        print("Error decoding notifications: $e");
+      }
+    }
+
+    notificationsMap[id.toString()] = {
+      "title": title,
+      "body": body,
+      "timestamp": scheduledDate.toIso8601String(),
+    };
+
+    await _secureStorage.write(
+        key: 'scheduled_notifications', value: jsonEncode(notificationsMap)
+    );
   }
 
-  Future<Map<int, DateTime>> getScheduledNotifications() async {
-    String? storedNotifications = await secureStorage.read(key: 'scheduled_notifications');
-    if (storedNotifications == null) return {};
+  Future<Map<int, Map<String, dynamic>>> getScheduledNotifications() async {
+    String? storedNotifications =
+    await _secureStorage.read(key: 'scheduled_notifications');
 
-    Map<String, dynamic> notificationsMap = jsonDecode(storedNotifications);
-    return notificationsMap.map((key, value) => MapEntry(int.parse(key), DateTime.parse(value)));
+    if (storedNotifications == null || storedNotifications.isEmpty) return {};
+
+    try {
+      final decoded = jsonDecode(storedNotifications);
+      if (decoded is Map<String, dynamic>) {
+        return decoded.map((key, value) => MapEntry(int.parse(key), value));
+      }
+    } catch (e) {
+      print("Error decoding get notifications: $e");
+    }
+
+    return {}; // Return empty map if decoding fails
   }
+
 
   Future<void> cancelNotification(int id) async {
     await notificationsPlugin.cancel(id);
 
-    String? storedNotifications = await secureStorage.read(key: 'scheduled_notifications');
-    if (storedNotifications != null) {
-      Map<String, dynamic> notificationsMap = jsonDecode(storedNotifications);
-      notificationsMap.remove(id.toString());
-      await secureStorage.write(key: 'scheduled_notifications', value: jsonEncode(notificationsMap));
+    Map<int, Map<String, dynamic>> notificationsMap = await getScheduledNotifications();
+
+    if (notificationsMap.containsKey(id)) {
+      notificationsMap.remove(id);
+
+      // Convert keys back to String before storing in secure storage
+      final updatedJson = jsonEncode(
+        notificationsMap.map((key, value) => MapEntry(key.toString(), value)),
+      );
+
+      await _secureStorage.write(key: 'scheduled_notifications', value: updatedJson);
     }
   }
 
   Future<void> cancelAllNotifications() async {
     await notificationsPlugin.cancelAll();
-    await secureStorage.delete(key: 'scheduled_notifications');
+    await _secureStorage.delete(key: 'scheduled_notifications');
   }
 }

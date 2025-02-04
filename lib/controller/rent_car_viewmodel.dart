@@ -41,8 +41,8 @@ class RentCarViewmodel {
     await notifService.scheduleNotification(
         id: newRental.id!,
         title: "Auto gereed voor ophalen",
-        body: "De door u gereserveerde auto is gereed voor ophalen vanaf 8:00 op ${DateFormat('yyyy-MM-dd').format(startDate)}",
-        scheduledDate: DateTime.now().add(Duration(seconds: 5)),
+        body: "De door u gereserveerde ${rental.car.brand} ${rental.car.model} is gereed voor ophalen vanaf 8:00 op ${DateFormat('yyyy-MM-dd').format(startDate)}",
+        scheduledDate: DateTime.now().add(Duration(seconds: 10)),
     );
   }
 }
