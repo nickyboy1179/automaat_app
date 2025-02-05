@@ -355,7 +355,7 @@ class _$RentalDao extends RentalDao {
 
   @override
   Future<void> clearTable() async {
-    await _queryAdapter.queryNoReturn('DELETE FROM Customer');
+    await _queryAdapter.queryNoReturn('DELETE FROM RentalDatabase');
   }
 
   @override

@@ -58,6 +58,9 @@ abstract class RestClient {
 
   @POST(ApiRoutes.forgotPassword)
   Future<void> postForgotPassword(@Body() String email);
+
+  @GET(ApiRoutes.authenticate)
+  Future<void> getAuth();
 }
 
 @JsonSerializable()

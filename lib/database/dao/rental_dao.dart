@@ -12,7 +12,7 @@ abstract class RentalDao {
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertRental(RentalDatabase rental);
 
-  @Query('DELETE FROM Customer')
+  @Query('DELETE FROM RentalDatabase')
   Future<void> clearTable();
 
   @delete
