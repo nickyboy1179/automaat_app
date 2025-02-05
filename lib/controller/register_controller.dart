@@ -5,7 +5,7 @@ import 'package:automaat_app/locator.dart';
 class RegisterController {
   final RestClient _restClient = locator<RestClient>();
 
-  Future<void> register(
+  Future<bool> register(
       String firstName,
       String lastName,
       String email,
@@ -32,8 +32,9 @@ class RegisterController {
 
     try {
       await _restClient.postAccount(account);
+      return true;
     } catch (e) {
-      print(e);
+      return false;
     }
   }
 }

@@ -15,24 +15,40 @@ class RegisterView extends StatefulWidget {
 
 class RegisterViewState extends State<RegisterView> {
   final RegisterController controller = RegisterController();
-  final _formLoginKey = GlobalKey<FormState>();
+  final _formRegisterKey = GlobalKey<FormState>();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmController = TextEditingController();
+  final TextEditingController _passwordConfirmController =
+      TextEditingController();
   final Widget automaatLogoSvg =
       SvgPicture(AssetBytesLoader('assets/automaat_logo_purple.svg.vec'));
   String? _errorMessage;
 
   Future<void> _register() async {
-    String firstName = _firstNameController.text;
-    String lastName = _lastNameController.text;
-    String email = _emailController.text;
-    String password = _passwordController.text;
-    String passwordConfirm = _passwordConfirmController.text;
+    if (_formRegisterKey.currentState!.validate()) {
+      String firstName = _firstNameController.text;
+      String lastName = _lastNameController.text;
+      String email = _emailController.text;
+      String password = _passwordController.text;
 
-    await controller.register(firstName, lastName, email, password);
+      bool success =
+          await controller.register(firstName, lastName, email, password);
+
+      if (success) {
+        _navigateBackToLogin();
+      } else {
+        setState(() {
+          _errorMessage = "Account met dit e-mailadres bestaat al.";
+        });
+        _formRegisterKey.currentState?.validate();
+      }
+    }
+  }
+
+  void _navigateBackToLogin() {
+    Navigator.pop(context);
   }
 
   @override
@@ -58,7 +74,7 @@ class RegisterViewState extends State<RegisterView> {
             child: automaatLogoSvg,
           ),
           Form(
-            key: _formLoginKey,
+            key: _formRegisterKey,
             child: Column(children: [
               Row(
                 children: [
@@ -73,12 +89,13 @@ class RegisterViewState extends State<RegisterView> {
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           labelText: 'Voornaam',
-                          errorText: _errorMessage,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16,),
+                  const SizedBox(
+                    width: 16,
+                  ),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
@@ -90,7 +107,6 @@ class RegisterViewState extends State<RegisterView> {
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           labelText: 'Achternaam',
-                          errorText: _errorMessage,
                         ),
                       ),
                     ),
@@ -117,6 +133,7 @@ class RegisterViewState extends State<RegisterView> {
                       borderRadius: BorderRadius.circular(16.0),
                     ),
                     labelText: 'E-mailadres',
+                    errorText: _errorMessage,
                   ),
                 ),
               ),
@@ -124,6 +141,14 @@ class RegisterViewState extends State<RegisterView> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Vul een wachtwoord in";
+                    } else if (value != _passwordConfirmController.text) {
+                      return "Wachtwoorden moeten met elkaar overeen komen";
+                    }
+                    return null;
+                  },
                   obscureText: true,
                   controller: _passwordController,
                   decoration: InputDecoration(
@@ -131,7 +156,6 @@ class RegisterViewState extends State<RegisterView> {
                       borderRadius: BorderRadius.circular(16.0),
                     ),
                     labelText: 'Wachtwoord',
-                    errorText: _errorMessage,
                   ),
                 ),
               ),
@@ -139,6 +163,14 @@ class RegisterViewState extends State<RegisterView> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                 child: TextFormField(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Vul een wachtwoord in";
+                    } else if (value != _passwordController.text) {
+                      return "Wachtwoorden moeten met elkaar overeen komen";
+                    }
+                    return null;
+                  },
                   obscureText: true,
                   controller: _passwordConfirmController,
                   decoration: InputDecoration(
@@ -146,7 +178,6 @@ class RegisterViewState extends State<RegisterView> {
                       borderRadius: BorderRadius.circular(16.0),
                     ),
                     labelText: 'Wachtwoord herhalen',
-                    errorText: _errorMessage,
                   ),
                 ),
               ),
@@ -156,7 +187,9 @@ class RegisterViewState extends State<RegisterView> {
                       text: "Registreren",
                       color: colorScheme.primary,
                       onColor: colorScheme.onPrimary,
-                      onPressed: _register,
+                      onPressed: () {
+                        _register();
+                      },
                     )
                   : ConfirmButton(
                       text: "Registreren",
