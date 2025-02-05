@@ -11,4 +11,7 @@ abstract class CustomerDao {
 
   @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertCustomer(Customer customer);
+
+  @Query('DELETE FROM Customer')
+  Future<void> clearTable();
 }

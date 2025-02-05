@@ -237,8 +237,8 @@ class _CarListState extends State<CarList> {
                 return CarListItem(
                   key: ValueKey(car.id),
                   car: car,
-                  color: Theme.of(context).colorScheme.surface,
-                  onColor: Theme.of(context).colorScheme.onSurface,
+                  color: colorScheme.surface,
+                  onColor: colorScheme.onSurface,
                   onPressed: () {
                     navigateToCarView(car);
                   },

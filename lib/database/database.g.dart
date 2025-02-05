@@ -266,6 +266,11 @@ class _$CustomerDao extends CustomerDao {
   }
 
   @override
+  Future<void> clearTable() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM Customer');
+  }
+
+  @override
   Future<void> insertCustomer(Customer customer) async {
     await _customerInsertionAdapter.insert(
         customer, OnConflictStrategy.replace);
@@ -346,6 +351,11 @@ class _$RentalDao extends RentalDao {
             carId: row['carId'] as int,
             customerId: row['customerId'] as int),
         arguments: [id]);
+  }
+
+  @override
+  Future<void> clearTable() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM Customer');
   }
 
   @override
