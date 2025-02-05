@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/service/locator.dart';
 import 'package:automaat_app/model/retrofit/rest_client.dart';
 import 'package:automaat_app/model/rest_model/inspections_model.dart';
 import 'package:automaat_app/model/rest_model/rental_model.dart';

@@ -1,4 +1,4 @@
-import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/service/locator.dart';
 import 'package:automaat_app/provider/auth_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';

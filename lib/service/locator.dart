@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'database/database.dart';
-import 'model/retrofit/rest_client.dart';
-import 'model/retrofit/dio_client.dart';
+import '../database/database.dart';
+import '../model/retrofit/rest_client.dart';
+import '../model/retrofit/dio_client.dart';
 
 final GetIt locator = GetIt.instance;
 

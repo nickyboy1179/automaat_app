@@ -1,6 +1,6 @@
 import 'package:automaat_app/model/rest_model/am_register_model.dart';
 import 'package:automaat_app/model/retrofit/rest_client.dart';
-import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/service/locator.dart';
 
 class RegisterController {
   final RestClient _restClient = locator<RestClient>();

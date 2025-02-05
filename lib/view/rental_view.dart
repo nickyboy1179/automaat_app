@@ -1,7 +1,7 @@
 import 'package:automaat_app/common/static_elements.dart';
 import 'package:automaat_app/view/rental_inspection_view.dart';
 import 'package:flutter/material.dart';
-import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/service/locator.dart';
 import 'package:automaat_app/model/retrofit/rest_client.dart';
 import 'package:automaat_app/controller/rental_controller.dart';
 import 'package:automaat_app/model/rest_model/rental_model.dart';

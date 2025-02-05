@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'car_list_view.dart';
 import 'notifications_view.dart';
 
-class NavigationViewV2 extends StatefulWidget {
-  const NavigationViewV2({super.key});
+class NavigationView extends StatefulWidget {
+  const NavigationView({super.key});
 
   @override
-  State<NavigationViewV2> createState() => _NavigationViewV2State();
+  State<NavigationView> createState() => _NavigationViewState();
 }
 
-class _NavigationViewV2State extends State<NavigationViewV2> with TickerProviderStateMixin<NavigationViewV2> {
+class _NavigationViewState extends State<NavigationView> with TickerProviderStateMixin<NavigationView> {
   static const List<Destination> allDestinations = <Destination>[
     Destination(0, Icons.car_crash,      'Auto huren',),
     Destination(1, Icons.notifications,  'Meldingen',),

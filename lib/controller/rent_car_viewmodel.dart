@@ -1,4 +1,4 @@
-import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/service/locator.dart';
 import 'package:automaat_app/service/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';

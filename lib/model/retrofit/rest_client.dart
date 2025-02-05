@@ -54,7 +54,10 @@ abstract class RestClient {
   Future<Inspection> postInspection(@Body() Inspection inspection);
 
   @POST(ApiRoutes.register)
-  Future<AmRegister> postAccount(@Body() AmRegister account);
+  Future<void> postAccount(@Body() AmRegister account);
+
+  @POST(ApiRoutes.forgotPassword)
+  Future<void> postForgotPassword(@Body() String email);
 }
 
 @JsonSerializable()

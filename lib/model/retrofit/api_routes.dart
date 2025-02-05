@@ -6,4 +6,5 @@ class ApiRoutes {
   static const String rentals = '/rentals';
   static const String aboutMe = '/AM/me';
   static const String inspection = '/inspections';
+  static const String forgotPassword = '/AM/account/reset-password/init';
 }

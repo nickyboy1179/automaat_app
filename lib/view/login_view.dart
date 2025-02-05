@@ -1,5 +1,6 @@
 import 'package:automaat_app/component/confirm_button.dart';
 import 'package:automaat_app/provider/network_state_provider.dart';
+import 'package:automaat_app/view/forgot_password_view.dart';
 import 'package:automaat_app/view/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/controller/login_viewmodel.dart';
@@ -102,6 +103,18 @@ class _LoginState extends State<Login> {
                       errorText: _errorMessage,
                     ),
                   ),
+                ),
+
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ForgotPasswordView(),
+                      ),
+                    );
+                  },
+                  child: Text("Wachtwoord vergeten?"),
                 ),
 
                 networkStateProvider.isConnected

@@ -3,7 +3,7 @@ import 'package:automaat_app/controller/notifications_controller.dart';
 import 'package:automaat_app/service/notification_service.dart';
 import 'package:flutter/material.dart';
 
-import '../locator.dart';
+import '../service/locator.dart';
 
 class NotificationsView extends StatefulWidget {
   const NotificationsView({super.key});

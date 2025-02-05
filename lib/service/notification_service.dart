@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/service/locator.dart';
 
 class NotificationService {
   final notificationsPlugin = FlutterLocalNotificationsPlugin();

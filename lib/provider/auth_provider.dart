@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/service/locator.dart';
 
 class AuthProvider with ChangeNotifier {
   final _secureStorage = locator<FlutterSecureStorage>();

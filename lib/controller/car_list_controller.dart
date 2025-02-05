@@ -1,6 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/service/locator.dart';
 import 'package:automaat_app/database/database.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:automaat_app/model/retrofit/rest_client.dart';

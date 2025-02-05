@@ -1,9 +1,9 @@
 import 'package:automaat_app/provider/auth_provider.dart';
 import 'package:automaat_app/provider/network_state_provider.dart';
 import 'package:automaat_app/theme/theme.dart';
-import 'package:automaat_app/view/navigation_view_v2.dart';
+import 'package:automaat_app/view/navigation_view.dart';
 import 'package:flutter/material.dart';
-import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/service/locator.dart';
 import 'package:automaat_app/view/login_view.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
@@ -43,7 +43,7 @@ class AutomaatApp extends StatelessWidget {
           title: 'Automaat',
           theme: lightMode,
           darkTheme: darkMode,
-          home: auth.isAuthenticated ? NavigationViewV2() : Login()
+          home: auth.isAuthenticated ? NavigationView() : Login()
         );
       },
     );

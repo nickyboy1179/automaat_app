@@ -1,7 +1,7 @@
 import 'package:automaat_app/database/model/rental_database_model.dart';
 import 'package:automaat_app/model/rest_model/customer_model.dart';
 import 'package:automaat_app/model/rest_model/rental_model.dart';
-import 'package:automaat_app/locator.dart';
+import 'package:automaat_app/service/locator.dart';
 import 'package:automaat_app/model/retrofit/rest_client.dart';
 import 'package:automaat_app/model/rest_model/about_me_model.dart';
 import 'package:automaat_app/database/database.dart';

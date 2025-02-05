@@ -1,4 +1,4 @@
-import '../locator.dart';
+import '../service/locator.dart';
 import '../model/rest_model/about_me_model.dart';
 import '../model/retrofit/rest_client.dart';
 
