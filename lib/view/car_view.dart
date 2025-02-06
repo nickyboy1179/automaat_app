@@ -5,14 +5,14 @@ import 'dart:convert';
 import 'package:automaat_app/view/rent_car_view.dart';
 import 'package:automaat_app/common/static_elements.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
-import 'package:automaat_app/controller/car_viewmodel.dart';
+import 'package:automaat_app/controller/car_controller.dart';
 import 'package:automaat_app/provider/network_state_provider.dart';
 import 'package:automaat_app/component/confirm_button.dart';
 
 class CarView extends StatelessWidget {
   final Car car;
   final double _carInfoBoxWidth = 30.0;
-  final CarViewmodel _carViewmodel = CarViewmodel();
+  final CarController _controller = CarController();
   CarView({super.key, required this.car});
 
   @override
@@ -21,6 +21,13 @@ class CarView extends StatelessWidget {
     NetworkStateProvider networkStateProvider = Provider.of<NetworkStateProvider>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+            "Auto",
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: Padding(
       padding: const EdgeInsets.all(16),
@@ -135,7 +142,7 @@ class CarView extends StatelessWidget {
             text: "Huren",
             color: colorScheme.primary,
             onColor: colorScheme.onPrimary,
-            onPressed: () {_carViewmodel.onNavigate(context, car);}
+            onPressed: () {_controller.onNavigate(context, car);}
           )
               : ConfirmButton(
             text: "Huren",

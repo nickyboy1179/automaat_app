@@ -5,16 +5,20 @@ import 'package:automaat_app/provider/auth_provider.dart';
 import 'package:automaat_app/provider/network_state_provider.dart';
 import 'package:automaat_app/view/forgot_password_view.dart';
 
+import 'package:automaat_app/service/locator.dart';
+import 'package:automaat_app/service/notification_service.dart';
+
 class DeveloperOptionsView extends StatelessWidget {
   const DeveloperOptionsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
+    NotificationService notificationService = locator<NotificationService>();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Developer options"),
+        title: const Text("Developer options"),
       ),
       body: Column(
         children: [
@@ -40,6 +44,19 @@ class DeveloperOptionsView extends StatelessWidget {
                   ),
                 );
               }),
+          const SizedBox(height: 16),
+          ConfirmButton(
+              text: "Stuur melding!",
+              color: Theme.of(context).colorScheme.primary,
+              onColor: Theme.of(context).colorScheme.onPrimary,
+              onPressed: () {
+                notificationService.showNotification(
+                    title: "Melding!",
+                    body: "Wat een gribus app heb jij gemaakt zeg!");
+              }),
+          const SizedBox(
+            height: 16,
+          ),
         ],
       ),
     );

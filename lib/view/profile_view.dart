@@ -1,4 +1,4 @@
-import 'package:automaat_app/controller/profile_viewmodel.dart';
+import 'package:automaat_app/controller/profile_controller.dart';
 import 'package:automaat_app/database/database.dart';
 import 'package:automaat_app/service/notification_service.dart';
 import 'package:automaat_app/view/developer_options_view.dart';
@@ -12,7 +12,7 @@ import 'package:automaat_app/service/locator.dart';
 class ProfileView extends StatelessWidget {
   ProfileView({super.key});
 
-  final ProfileViewmodel profileViewmodel = ProfileViewmodel();
+  final ProfileController controller = ProfileController();
   final NotificationService _notificationService = locator<NotificationService>();
   final AppDatabase _database = locator<AppDatabase>();
 

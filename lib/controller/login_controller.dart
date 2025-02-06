@@ -16,7 +16,7 @@ class LoginController {
         rememberMe: true,
       );
       final response = await _restClient.authenticate(authRequest);
-      await auth.login(response.id_token);
+      await auth.login(response.token);
       return true;
     } catch (e) {
       return false;

@@ -5,7 +5,7 @@ import 'package:automaat_app/service/locator.dart';
 import 'package:automaat_app/model/retrofit/rest_client.dart';
 import 'package:automaat_app/model/rest_model/about_me_model.dart';
 import 'package:automaat_app/database/database.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:automaat_app/provider/network_state_provider.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';

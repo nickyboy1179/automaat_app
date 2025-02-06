@@ -8,7 +8,7 @@ import 'package:automaat_app/model/retrofit/rest_client.dart';
 import 'package:automaat_app/model/rest_model/rental_model.dart';
 import 'package:intl/intl.dart';
 
-class RentCarViewmodel {
+class RentCarController {
   final restClient = locator<RestClient>();
   final notifService = locator<NotificationService>();
 

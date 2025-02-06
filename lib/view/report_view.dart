@@ -4,6 +4,8 @@ import 'package:automaat_app/controller/report_controller.dart';
 import 'package:automaat_app/model/rest_model/rental_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:automaat_app/provider/network_state_provider.dart';
 
 class ReportView extends StatefulWidget {
   final Rental rental;
@@ -57,134 +59,145 @@ class ReportViewState extends State<ReportView> {
   Widget build(BuildContext context) {
     Rental rental = widget.rental;
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    return Container(
-      color: Theme.of(context).colorScheme.surface,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Text(
-                  "Schadeformulier",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 24),
-              Text(
-                "Beschrijving",
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 8),
-              TextFormField(
-                controller: _descriptionController,
-                maxLines: 5,
-                decoration: InputDecoration(
-                  hintText: "Voeg beschrijving van de schade toe.",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Voeg een beschrijving toe";
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 24),
-              Text(
-                "Voeg foto toe",
-                style: TextStyle(fontSize: 16),
-              ),
-              Row(
+    NetworkStateProvider networkStateProvider = Provider.of<NetworkStateProvider>(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+            "Schadeformulier",
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+        centerTitle: true
+      ),
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ElevatedButton.icon(
-                    onPressed: () => _pickImage(ImageSource.camera),
-                    icon: Icon(Icons.camera),
-                    label: Text("Foto nemen"),
+                  Text(
+                    "Beschrijving",
+                    style: TextStyle(fontSize: 16),
                   ),
-                  SizedBox(width: 8),
-                  ElevatedButton.icon(
-                    onPressed: () => _pickImage(ImageSource.gallery),
-                    icon: Icon(Icons.photo_library),
-                    label: Text("Kies foto uit gallerij"),
+                  SizedBox(height: 8),
+                  TextFormField(
+                    controller: _descriptionController,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      hintText: "Voeg beschrijving van de schade toe.",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Voeg een beschrijving toe";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 24),
+                  Text(
+                    "Voeg foto toe",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () => _pickImage(ImageSource.camera),
+                        icon: Icon(Icons.camera),
+                        label: Text("Foto nemen"),
+                      ),
+                      SizedBox(width: 8),
+                      ElevatedButton.icon(
+                        onPressed: () => _pickImage(ImageSource.gallery),
+                        icon: Icon(Icons.photo_library),
+                        label: Text("Kies foto uit gallerij"),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  _selectedImage != null
+                      ? Center(
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 200,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.surface,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 6,
+                                      spreadRadius: 2,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Image.file(_selectedImage!),
+                              ),
+                              SizedBox(height: 8),
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _selectedImage = null;
+                                  });
+                                },
+                                child: Text("Foto verwijderen",
+                                    style: TextStyle(color: Colors.red)),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Center(
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 200,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.surface,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 6,
+                                      spreadRadius: 2,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Icon(Icons.image_not_supported),
+                                ),
+                              ),
+                              SizedBox(height: 24),
+                              Text("Geen foto geselecteerd"),
+                              SizedBox(height: 8),
+                            ],
+                          ),
+                        ),
+                  SizedBox(height: 48),
+                  networkStateProvider.isConnected
+                      ? ConfirmButton(
+                      text: "Schadeformulier inleveren",
+                      color: colorScheme.primary,
+                      onColor: colorScheme.onPrimary,
+                      onPressed: () {
+                        _submitReport(context, rental);
+                      }
+                  )
+                      : ConfirmButton(
+                    text: "Schadeformulier inleveren",
+                    color: colorScheme.tertiary,
+                    onColor: colorScheme.onTertiary,
+                    onPressed: () {},
                   ),
                 ],
               ),
-              SizedBox(height: 16),
-              _selectedImage != null
-                  ? Center(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 200,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.surface,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 6,
-                                  spreadRadius: 2,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Image.file(_selectedImage!),
-                          ),
-                          SizedBox(height: 8),
-                          TextButton(
-                            onPressed: () {
-                              setState(() {
-                                _selectedImage = null;
-                              });
-                            },
-                            child: Text("Foto verwijderen",
-                                style: TextStyle(color: Colors.red)),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Center(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 200,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.surface,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 6,
-                                  spreadRadius: 2,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Icon(Icons.image_not_supported),
-                            ),
-                          ),
-                          SizedBox(height: 24),
-                          Text("Geen foto geselecteerd"),
-                          SizedBox(height: 8),
-                        ],
-                      ),
-                    ),
-              SizedBox(height: 48),
-              ConfirmButton(
-                text: "Schadeformulier inleveren",
-                color: colorScheme.primary,
-                onColor: colorScheme.onPrimary,
-                onPressed: () {
-                  _submitReport(context, rental);
-                },
-              ),
-            ],
+            ),
           ),
-        ),
       ),
     );
   }

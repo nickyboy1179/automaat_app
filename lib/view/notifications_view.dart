@@ -21,66 +21,89 @@ class NotificationsViewState extends State<NotificationsView> {
     super.initState();
   }
 
+  Future<void> _refresh() async {
+    await controller.loadNotifications();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Past Notifications")),
-        body: Column(
-          children: [
-            ConfirmButton(
-                text: "Stuur melding!",
-                color: Theme.of(context).colorScheme.primary,
-                onColor: Theme.of(context).colorScheme.onPrimary,
-                onPressed: () {
-                  notificationService.showNotification(
-                      title: "Melding pik!",
-                      body: "Wat een gribus app heb jij gemaakt zeg!");
-                }
-            ),
-            FutureBuilder(
-              future: controller.loadNotifications(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text("Error ${snapshot.error}"),
-                  );
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(
-                    child: Text("No past notifications"),
-                  );
-                } else {
-                  Map<int, Map<String, dynamic>> pastNotifications = snapshot.data!;
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: pastNotifications.keys.length,
-                      itemBuilder: (context, index) {
-                        int id = pastNotifications.keys.elementAt(index);
-                        Map<String, dynamic> notification = pastNotifications[id]!;
-                        return Dismissible(
-                          key: Key(id.toString()),
-                          onDismissed: (_) async => {
-                            await controller.deleteNotification(id),
-                            await controller.loadNotifications(),
-                            setState(() {})
-                          },
-                          background: Container(color: Colors.red),
+      appBar: AppBar(
+        title: const Text(
+          "Meldingen",
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
+      body: FutureBuilder(
+          future: controller.loadNotifications(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text("Error ${snapshot.error}"),
+              );
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return RefreshIndicator(
+                onRefresh: _refresh,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Column(children: [
+                    SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.3,
+                    ),
+                    const Center(
+                      child: Text("Geen meldingen"),
+                    ),
+                  ]),
+                ),
+              );
+            } else {
+              Map<int, Map<String, dynamic>> pastNotifications = snapshot.data!;
+              return RefreshIndicator(
+                  onRefresh: _refresh,
+                  child: ListView.builder(
+                    itemCount: pastNotifications.keys.length,
+                    itemBuilder: (context, index) {
+                      int id = pastNotifications.keys.elementAt(index);
+                      Map<String, dynamic> notification =
+                          pastNotifications[id]!;
+                      return Dismissible(
+                        key: Key(id.toString()),
+                        onDismissed: (_) async {
+                          await controller.deleteNotification(id);
+                          await controller.loadNotifications();
+                          setState(() {});
+                        },
+                        background: Container(
+                          alignment: Alignment.centerRight,
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(Icons.delete, color: Colors.white),
+                        ),
+                        child: Card(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          elevation: 4,
                           child: ListTile(
+                            leading: Icon(Icons.notifications, color: Theme.of(context).colorScheme.primary),
                             title: Text(notification["title"]),
                             subtitle: Text(notification["body"]),
-                            trailing:
-                                Text(notification["timestamp"].split('T').first),
+                            trailing: Text(notification["timestamp"].split('T').first),
                           ),
-                        );
-                      },
-                    ),
-                  );
-                }
-              }
-          ),
-    ]
-        )
+                        ),
+                      );
+
+
+                    },
+                  ),
+              );
+            }
+          }),
     );
   }
 }

@@ -2,8 +2,10 @@ import 'package:automaat_app/component/car_list_item.dart';
 import 'package:automaat_app/component/confirm_button.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
-import 'package:automaat_app/controller/rent_car_viewmodel.dart';
+import 'package:automaat_app/controller/rent_car_controller.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:automaat_app/provider/network_state_provider.dart';
 
 class RentCarView extends StatefulWidget {
   final Car car;
@@ -16,7 +18,7 @@ class RentCarView extends StatefulWidget {
 
 class RentCarViewSate extends State<RentCarView> {
   late Car car;
-  final RentCarViewmodel rentCarViewmodel = RentCarViewmodel();
+  final RentCarController controller = RentCarController();
   late DateTime _startDate;
   late DateTime _endDate;
 
@@ -41,11 +43,16 @@ class RentCarViewSate extends State<RentCarView> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-
+    NetworkStateProvider networkStateProvider = Provider.of<NetworkStateProvider>(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text("Reserveren"),
+          title: const Text(
+            "Reserveren",
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
         ),
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: Column(
           children: [
             Text(
@@ -93,17 +100,24 @@ class RentCarViewSate extends State<RentCarView> {
               },
             ),
             const SizedBox(height: 40),
-            ConfirmButton(
+            networkStateProvider.isConnected
+                ? ConfirmButton(
+                text: "Bevestig reservering",
+                color: colorScheme.primary,
+                onColor: colorScheme.onPrimary,
+                onPressed: () => {
+                  controller.postRental(car, _startDate, _endDate, context),
+                  if (context.mounted)
+                    {
+                      Navigator.of(context).popUntil((route) => route.isFirst),
+                    }
+                },
+            )
+                : ConfirmButton(
               text: "Bevestig reservering",
-              color: colorScheme.primary,
-              onColor: colorScheme.onPrimary,
-              onPressed: () => {
-                rentCarViewmodel.postRental(car, _startDate, _endDate, context),
-                if (context.mounted)
-                  {
-                    Navigator.of(context).popUntil((route) => route.isFirst),
-                  }
-              },
+              color: colorScheme.tertiary,
+              onColor: colorScheme.onTertiary,
+              onPressed: () {},
             ),
           ],
         ));

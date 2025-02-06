@@ -34,12 +34,11 @@ class _CarListState extends State<CarList> {
 
   void navigateToCarView(Car car) {
     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => CarView(
-        car: car,
-      )
-      )
-    );
+        context,
+        MaterialPageRoute(
+            builder: (context) => CarView(
+                  car: car,
+                )));
   }
 
   @override
@@ -62,7 +61,7 @@ class _CarListState extends State<CarList> {
 
   void _onScroll() {
     if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200 &&
+            _scrollController.position.maxScrollExtent - 200 &&
         !isLoading &&
         hasMore) {
       _fetchCars();
@@ -136,14 +135,6 @@ class _CarListState extends State<CarList> {
     }
   }
 
-  void _clearSearch() {
-    setState(() {
-      searchQuery = '';
-      isSearchActive = false;
-      cars = List.from(allCars);
-    });
-  }
-
   void _filterCars() {
     try {
       filteredCars = List.from(allCars);
@@ -154,29 +145,29 @@ class _CarListState extends State<CarList> {
               case "fuel":
                 String? key = StaticElements.fuelTypes.entries
                     .firstWhere((entry) => entry.value == e.value,
-                    orElse: () => MapEntry('', ''))
+                        orElse: () => MapEntry('', ''))
                     .key;
                 return car.fuel == key;
               case "body":
                 String? key = StaticElements.bodyTypes.entries
                     .firstWhere((entry) => entry.value == e.value,
-                    orElse: () => MapEntry('', ''))
+                        orElse: () => MapEntry('', ''))
                     .key;
                 return car.body == key;
               case "modelYear":
-                try{
-                  int year = int.parse (e.value);
+                try {
+                  int year = int.parse(e.value);
                   return car.modelYear == year;
-                } catch (e){
+                } catch (e) {
                   print(e);
                 }
               case "brand":
                 return car.brand == e.value;
               case "nrOfSeats":
-                try{
-                  int seats = int.parse (e.value);
+                try {
+                  int seats = int.parse(e.value);
                   return car.nrOfSeats == seats;
-                } catch (e){
+                } catch (e) {
                   print(e);
                 }
             }
@@ -190,88 +181,90 @@ class _CarListState extends State<CarList> {
     }
   }
 
+  Future<void> _refresh() async {
+    _fetchCars(forceNetworkFetch: true);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return Column(
-        children: [
-
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              onChanged: (value) {
-                setState(() {
-                  searchQuery = value.toLowerCase();
-                  isSearchActive = searchQuery.isNotEmpty;
-                });
-                _fetchCars(forceNetworkFetch: false);
-              },
-              decoration: InputDecoration(
-                hintText: 'Zoeken',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: TextField(
+            onChanged: (value) {
+              setState(() {
+                searchQuery = value.toLowerCase();
+                isSearchActive = searchQuery.isNotEmpty;
+              });
+              _fetchCars(forceNetworkFetch: false);
+            },
+            decoration: InputDecoration(
+              hintText: 'Zoeken',
+              prefixIcon: const Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
           ),
-
-          const SizedBox(height: 8),
-
-          _filterWidget(),
-
-          const SizedBox(height: 8),
-
-          Expanded(
-            child: cars.isEmpty && searchQuery.isNotEmpty
-                ? const Center(child: Text('No cars match the criteria.'))
-                : ListView.builder(
-              controller: _scrollController,
-              itemCount: cars.length + (hasMore ? 1 : 0),
-              itemBuilder: (context, index) {
-                if (index == cars.length) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                final Car car = cars[index];
-                return CarListItem(
-                  key: ValueKey(car.id),
-                  car: car,
-                  color: colorScheme.surface,
-                  onColor: colorScheme.onSurface,
-                  onPressed: () {
-                    navigateToCarView(car);
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      );
+        ),
+        const SizedBox(height: 8),
+        _filterWidget(),
+        const SizedBox(height: 8),
+        Expanded(
+          child: cars.isEmpty && searchQuery.isNotEmpty
+              ? const Center(child: Text("Geen auto's voldoen aan de criterea"))
+              : RefreshIndicator(
+                  onRefresh: _refresh,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: cars.length + (hasMore ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      if (index == cars.length) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      final Car car = cars[index];
+                      return CarListItem(
+                        key: ValueKey(car.id),
+                        car: car,
+                        color: colorScheme.surface,
+                        onColor: colorScheme.onSurface,
+                        onPressed: () {
+                          navigateToCarView(car);
+                        },
+                      );
+                    },
+                  ),
+                ),
+        ),
+      ],
+    );
   }
 
   Widget _filterWidget() {
     return ExpansionTile(
-      title: Text("Filter auto's"),
+      title: const Text("Filter auto's"),
       children: [
         _filtersActive()
             ? ConfirmButton(
-            text: "Verwijder filters",
-            color: Theme.of(context).colorScheme.primary,
-            onColor: Theme.of(context).colorScheme.onPrimary,
-            onPressed: () {
-              _resetFilers();
-            })
+                text: "Verwijder filters",
+                color: Theme.of(context).colorScheme.primary,
+                onColor: Theme.of(context).colorScheme.onPrimary,
+                onPressed: () {
+                  _resetFilers();
+                })
             : ConfirmButton(
-            text: "Verwijder filters",
-            color: Theme.of(context).colorScheme.tertiary,
-            onColor: Theme.of(context).colorScheme.onTertiary,
-            onPressed: () {}),
+                text: "Verwijder filters",
+                color: Theme.of(context).colorScheme.secondary,
+                onColor: Theme.of(context).colorScheme.onSecondary,
+                onPressed: () {}),
         ConstrainedBox(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.sizeOf(context).height * 0.3,
           ),
-
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -295,9 +288,19 @@ class _CarListState extends State<CarList> {
                     ),
                     _filterOptionsSelections(
                       "Merk",
-                      ["Audi", "BMW", "Mercedes-Benz", "Toyota", "Jeep",
-                      "Hyundai", "Chevrolet", "Subaru", "Ford", "Honda",
-                      "Nissan",],
+                      [
+                        "Audi",
+                        "BMW",
+                        "Mercedes-Benz",
+                        "Toyota",
+                        "Jeep",
+                        "Hyundai",
+                        "Chevrolet",
+                        "Subaru",
+                        "Ford",
+                        "Honda",
+                        "Nissan",
+                      ],
                       "brand",
                     ),
                     _filterOptionsSelections(
@@ -325,13 +328,18 @@ class _CarListState extends State<CarList> {
             return ElevatedButton(
               onPressed: () {
                 setState(() {
-                  _selectedFilters[optionName] = (_selectedFilters[optionName] == option) ? null : option;
+                  _selectedFilters[optionName] =
+                      (_selectedFilters[optionName] == option) ? null : option;
                   _fetchCars(forceNetworkFetch: false);
                 });
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: _selectedFilters[optionName] == option ? Colors.blue : Colors.purple,
-                foregroundColor: _selectedFilters[optionName] == option ? Colors.white : Colors.black,
+                backgroundColor: _selectedFilters[optionName] == option
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.secondary,
+                foregroundColor: _selectedFilters[optionName] == option
+                    ? Theme.of(context).colorScheme.onPrimary
+                    : Theme.of(context).colorScheme.onSecondary,
               ),
               child: Text(option),
             );

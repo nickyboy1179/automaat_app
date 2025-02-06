@@ -3,7 +3,7 @@ import 'package:automaat_app/provider/network_state_provider.dart';
 import 'package:automaat_app/view/forgot_password_view.dart';
 import 'package:automaat_app/view/register_view.dart';
 import 'package:flutter/material.dart';
-import 'package:automaat_app/controller/login_viewmodel.dart';
+import 'package:automaat_app/controller/login_controller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:vector_graphics/vector_graphics.dart';
