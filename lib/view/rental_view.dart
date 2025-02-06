@@ -44,17 +44,16 @@ class _RentalViewState extends State<RentalView> {
                 setState(() {});
               },
               child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: Expanded(
-                    child: Column(
-                                    children: [
-                    SizedBox(height: MediaQuery.sizeOf(context).height *0.4),
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    SizedBox(height: MediaQuery.sizeOf(context).height * 0.4),
                     const Center(
-                        child: Text('Reserverings informatie niet beschikbaar')
-                    ),
-                                    ],
-                                  ),
-                  )));
+                        child:
+                            Text('Reserverings informatie niet beschikbaar')),
+                  ],
+                ),
+              ));
         } else {
           List<Rental> rentals = snapshot.data!;
           List<Rental> activeRentals = [
