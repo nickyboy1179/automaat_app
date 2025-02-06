@@ -32,7 +32,7 @@ class RentalCardItem extends StatelessWidget {
               // Date and Icon
               Row(
                 children: [
-                  Icon(Icons.calendar_today, color: color,),
+                  Icon(Icons.calendar_today, color: onColor,),
                   SizedBox(width: 5),
                   Text(
                     '${rental.fromDate} | ${rental.toDate}',
@@ -78,11 +78,17 @@ class RentalCardItem extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 5),
-                          Text(
-                            rental.car.body,
-                            style: TextStyle(
-                              color: onColor,
-                            ),
+                          Row(
+                            children: [
+                              Icon(Icons.car_repair, color: onColor),
+                              SizedBox(width: 5),
+                              Text(
+                                rental.car.body,
+                                style: TextStyle(
+                                  color: onColor,
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(height: 2),
                           Row(
@@ -103,7 +109,7 @@ class RentalCardItem extends StatelessWidget {
                             child: Text(
                               "€ ${rental.car.price},00/dag",
                               style: TextStyle(
-                                color: onColor,
+                                color: Colors.red,
                               ),
                             ),
                           ),

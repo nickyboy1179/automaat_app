@@ -66,7 +66,7 @@ class CarView extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
-                      color: StaticElements.accentColor,
+                      color: colorScheme.primary,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -74,10 +74,18 @@ class CarView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
+                        "${car.modelYear}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: colorScheme.primary,
+                        ),
+                      ),
+                      SizedBox(width: _carInfoBoxWidth),
+                      Text(
                         "${StaticElements.fuelTypes[car.fuel]}",
                         style: TextStyle(
                           fontSize: 14,
-                          color: StaticElements.accentColor,
+                          color: colorScheme.primary
                         ),
                       ),
                       SizedBox(width: _carInfoBoxWidth),
@@ -85,23 +93,9 @@ class CarView extends StatelessWidget {
                         "${StaticElements.bodyTypes[car.body]}",
                         style: TextStyle(
                           fontSize: 14,
-                          color: StaticElements.accentColor,
+                          color: colorScheme.primary,
                         ),
                       ),
-                      SizedBox(width: _carInfoBoxWidth),
-                      Text(
-                        "${car.modelYear}",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: StaticElements.accentColor,
-                        ),
-                      ),
-                      SizedBox(width: _carInfoBoxWidth),
-                      Text(car.options,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: StaticElements.accentColor,
-                          )),
                     ],
                   ),
                   Row(
@@ -110,24 +104,28 @@ class CarView extends StatelessWidget {
                       Text("${car.nrOfSeats} stoelen",
                           style: TextStyle(
                             fontSize: 16,
-                            color: StaticElements.accentColor,
+                            color: colorScheme.primary,
                           )),
+                      SizedBox(width: _carInfoBoxWidth),
+                      Text(
+                          car.options,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: colorScheme.primary,
+                          )
+                      ),
+                    ],
+
+                  ),
+                  const SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
                       SizedBox(width: _carInfoBoxWidth),
                       Text("€ ${car.price},00 per dag",
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black,
-                          )),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(width: _carInfoBoxWidth),
-                      Text("${car.engineSize} Motor formaat",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: StaticElements.accentColor,
+                            color: Colors.red,
                           )),
                     ],
                   ),

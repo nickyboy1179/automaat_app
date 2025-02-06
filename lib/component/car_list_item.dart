@@ -116,7 +116,7 @@ class CarListItemSate extends State<CarListItem> {
                     ),
                     SizedBox(height: columnItemPadding),
                     Text(
-                      "${car.nrOfSeats} stoelen",
+                      "${car.modelYear}",
                       style: TextStyle(
                           fontSize: fontSizeAttr,
                           color: onColor

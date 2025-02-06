@@ -153,7 +153,7 @@ class CompleteRentalViewState extends State<CompleteRentalView> {
       borderRadius: BorderRadius.circular(12),
       boxShadow: [
         BoxShadow(
-          color: Colors.grey,
+          color: Theme.of(context).colorScheme.onInverseSurface,
           blurRadius: 6,
           spreadRadius: 2,
           offset: Offset(0, 3),
