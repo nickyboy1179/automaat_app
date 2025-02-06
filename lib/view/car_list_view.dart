@@ -1,10 +1,12 @@
 import 'package:automaat_app/component/confirm_button.dart';
+import 'package:automaat_app/provider/network_state_provider.dart';
 import 'package:automaat_app/view/car_view.dart';
 import 'package:flutter/material.dart';
 import 'package:automaat_app/model/rest_model/car_model.dart';
 import 'package:automaat_app/controller/car_list_controller.dart';
 import 'package:automaat_app/component/car_list_item.dart';
 import 'package:automaat_app/common/static_elements.dart';
+import 'package:provider/provider.dart';
 
 class CarList extends StatefulWidget {
   const CarList({super.key});
@@ -14,7 +16,7 @@ class CarList extends StatefulWidget {
 }
 
 class _CarListState extends State<CarList> {
-  final carListViewmodel = CarListController();
+  final controller = CarListController();
 
   String searchQuery = "";
   List<Car> cars = [];
@@ -49,7 +51,7 @@ class _CarListState extends State<CarList> {
   }
 
   Future<void> _initialize() async {
-    await carListViewmodel.loadLoadedPages();
+    await controller.loadLoadedPages();
     _fetchCars();
   }
 
@@ -83,12 +85,20 @@ class _CarListState extends State<CarList> {
   }
 
   Future<void> _fetchCars({bool forceNetworkFetch = false}) async {
+    final NetworkStateProvider network = Provider.of<NetworkStateProvider>(context, listen: false);
+
     if (isLoading) return;
     setState(() => isLoading = true);
 
     try {
-      List<Car> fetchedCars = await carListViewmodel.fetchCarList(
-          forceNetworkFetch: forceNetworkFetch);
+      List<Car> fetchedCars = [];
+
+      if (network.isConnected) {
+        fetchedCars = await controller.fetchCarList(
+            forceNetworkFetch: forceNetworkFetch);
+      } else {
+        fetchedCars = await controller.fetchCarListLocal();
+      }
 
       setState(() {
         if (fetchedCars.isEmpty) {
@@ -97,7 +107,7 @@ class _CarListState extends State<CarList> {
           allCars.addAll(fetchedCars);
           cars.addAll(fetchedCars);
           filteredCars.addAll(fetchedCars);
-          carListViewmodel.incrementPage();
+          controller.incrementPage();
         }
       });
 

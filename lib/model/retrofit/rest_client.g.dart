@@ -21,12 +21,12 @@ Map<String, dynamic> _$AuthRequestToJson(AuthRequest instance) =>
 
 TokenResponse _$TokenResponseFromJson(Map<String, dynamic> json) =>
     TokenResponse(
-      token: json['token'] as String,
+      id_token: json['id_token'] as String,
     );
 
 Map<String, dynamic> _$TokenResponseToJson(TokenResponse instance) =>
     <String, dynamic>{
-      'token': instance.token,
+      'id_token': instance.id_token,
     };
 
 // **************************************************************************

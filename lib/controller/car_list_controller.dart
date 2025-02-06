@@ -54,6 +54,19 @@ class CarListController {
     return cars;
   }
 
+  Future<List<Car>> fetchCarListLocal() async {
+    List<Car> cars = [];
+
+    if (loadedPages.contains(page)) {
+      final localCars = await _database.carDao.getCarsByPage(page * size, size);
+      if (localCars.isNotEmpty) {
+        cars.addAll(localCars);
+      }
+    }
+
+    return cars;
+  }
+
   void incrementPage() {
     page++;
   }

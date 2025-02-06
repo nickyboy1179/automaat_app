@@ -83,9 +83,9 @@ class AuthRequest {
 
 @JsonSerializable()
 class TokenResponse {
-  final String token;
+  final String id_token;
 
-  TokenResponse({required this.token});
+  TokenResponse({required this.id_token});
 
   factory TokenResponse.fromJson(Map<String, dynamic> json) =>
       _$TokenResponseFromJson(json);
