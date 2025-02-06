@@ -32,7 +32,7 @@ ThemeData darkMode = ThemeData(
     primary: Colors.white,
     onPrimary: Colors.grey.shade900,
     secondary: Colors.purple.shade400,
-    onSecondary: Colors.grey.shade900,
+    onSecondary: Colors.white38,
     onInverseSurface: Colors.black,
     // For no network buttons
 

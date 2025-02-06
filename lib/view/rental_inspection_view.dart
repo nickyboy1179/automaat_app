@@ -11,6 +11,7 @@ import 'package:automaat_app/provider/network_state_provider.dart';
 
 class RentalInspectionView extends StatefulWidget {
   final Rental rental;
+
   const RentalInspectionView({super.key, required this.rental});
 
   @override
@@ -30,7 +31,9 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ReportView(rental: rental,),
+        builder: (context) => ReportView(
+          rental: rental,
+        ),
       ),
     );
   }
@@ -39,7 +42,9 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CompleteRentalView(rental: rental,),
+        builder: (context) => CompleteRentalView(
+          rental: rental,
+        ),
       ),
     );
   }
@@ -47,10 +52,15 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    NetworkStateProvider networkStateProvider = Provider
-        .of<NetworkStateProvider>(context);
+    NetworkStateProvider networkStateProvider =
+        Provider.of<NetworkStateProvider>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Reservering",
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+        centerTitle: true,
+      ),
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: SingleChildScrollView(
@@ -65,35 +75,38 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
                 _buildCarInfoCard(context),
                 SizedBox(height: 16),
                 networkStateProvider.isConnected
-                ? ConfirmButton(
-                    text: "Schade melden",
-                    color: colorScheme.primary,
-                    onColor: colorScheme.onPrimary,
-                    onPressed: () {
-                      _navigateToReport(context);
-                    },
-                ) : ConfirmButton(
-                    text: "Schade melden",
-                    color: colorScheme.tertiary,
-                    onColor: colorScheme.onTertiary,
-                    onPressed: () {},
-                ),
+                    ? ConfirmButton(
+                        text: "Schade melden",
+                        color: colorScheme.primary,
+                        onColor: colorScheme.onPrimary,
+                        onPressed: () {
+                          _navigateToReport(context);
+                        },
+                      )
+                    : ConfirmButton(
+                        text: "Schade melden",
+                        color: colorScheme.tertiary,
+                        onColor: colorScheme.onTertiary,
+                        onPressed: () {},
+                      ),
                 SizedBox(height: 16),
                 rental.state != "PICKUP" && rental.state != "RETURNED"
-                ? networkStateProvider.isConnected
-                    ? ConfirmButton(
-                  text: "Huurtermijn beëindigen",
-                  color: colorScheme.primary,
-                  onColor: colorScheme.onPrimary,
-                  onPressed: () {
-                    _navigateToRentalCompletion(context);
-                  },
-                ) : ConfirmButton(
-                  text: "Huurtermijn beëindigen",
-                  color: colorScheme.tertiary,
-                  onColor: colorScheme.onTertiary,
-                  onPressed: () {},
-                ) : SizedBox()
+                    ? networkStateProvider.isConnected
+                        ? ConfirmButton(
+                            text: "Huurtermijn beëindigen",
+                            color: colorScheme.primary,
+                            onColor: colorScheme.onPrimary,
+                            onPressed: () {
+                              _navigateToRentalCompletion(context);
+                            },
+                          )
+                        : ConfirmButton(
+                            text: "Huurtermijn beëindigen",
+                            color: colorScheme.tertiary,
+                            onColor: colorScheme.onTertiary,
+                            onPressed: () {},
+                          )
+                    : SizedBox()
               ],
             ),
           ),
@@ -111,7 +124,8 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
         children: [
           Row(
             children: [
-              Icon(Icons.calendar_today, color: Theme.of(context).colorScheme.primary),
+              Icon(Icons.calendar_today,
+                  color: Theme.of(context).colorScheme.primary),
               SizedBox(width: 8),
               Text(
                 'Informatie',
@@ -160,11 +174,11 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
 
   Widget _buildCarInfoCard(BuildContext context) {
     return CarListItem(
-        key: ValueKey(rental.car.id),
-        car: rental.car,
-        color: Theme.of(context).colorScheme.surface,
-        onColor: Theme.of(context).colorScheme.onSurface,
-        onPressed: (() {}),
+      key: ValueKey(rental.car.id),
+      car: rental.car,
+      color: Theme.of(context).colorScheme.surface,
+      onColor: Theme.of(context).colorScheme.onSurface,
+      onPressed: (() {}),
     );
   }
 
@@ -174,10 +188,10 @@ class RentalInspectionViewState extends State<RentalInspectionView> {
         initialCenter: LatLng(latitude, longitude),
         initialZoom: 11,
         interactionOptions: InteractionOptions(
-          cursorKeyboardRotationOptions: CursorKeyboardRotationOptions.disabled(),
+          cursorKeyboardRotationOptions:
+              CursorKeyboardRotationOptions.disabled(),
           flags: InteractiveFlag.drag | InteractiveFlag.rotate,
         ),
-
       ),
       children: [
         TileLayer(

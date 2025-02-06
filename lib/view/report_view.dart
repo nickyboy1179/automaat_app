@@ -126,10 +126,10 @@ class ReportViewState extends State<ReportView> {
                                 height: 200,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.surface,
+                                  color: colorScheme.surface,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey,
+                                      color: colorScheme.onInverseSurface,
                                       blurRadius: 6,
                                       spreadRadius: 2,
                                       offset: Offset(0, 3),
@@ -158,10 +158,10 @@ class ReportViewState extends State<ReportView> {
                                 height: 200,
                                 width: 150,
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.surface,
+                                  color: colorScheme.surface,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey,
+                                      color: colorScheme.onInverseSurface,
                                       blurRadius: 6,
                                       spreadRadius: 2,
                                       offset: Offset(0, 3),
