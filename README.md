@@ -9,7 +9,7 @@ Model generator from json: https://app.quicktype.io/
 
 ## Start Ngrok
 ```
-ngrok http 8080 --domain talented-loving-llama.ngrok-free.app
+ngrok http 8080 --domain 'domain'.app
 ```
 ## Start JHipster
 ```
